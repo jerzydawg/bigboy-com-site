@@ -1,159 +1,493 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+import RelatedContent from '../components/RelatedContent.astro';
+import ProgramCities from '../components/ProgramCities.astro';
+import { getSiteURL, getSiteName, getDomain } from '../lib/site-config';
 
-const siteName = getSiteName();
-const keyword = getKeyword();
-const domain = getDomain();
-const siteURL = getSiteURL();
+const SITE_URL = getSiteURL();
+const SITE_NAME = getSiteName();
+const DOMAIN = getDomain();
 
-const title = `${keyword} - Lifeline Free Phone Program | ${siteName}`;
-const description = "Get your free Lifeline phone today. Learn how to qualify for free monthly service, unlimited talk and text, plus data. Apply now for your government phone.";
+const title = "Lifeline Free Government Phone | Federal Phone & Internet Discount Program 2025";
+const description = "Access the federal Lifeline program for discounted phone and internet service. Save up to $9.25 monthly on communication costs. Check eligibility instantly and apply online with no credit requirements.";
+
+// Structured data for better SEO - Rewritten for uniqueness
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Lifeline Free Government Phone Program | Federal Phone & Internet Service 2025",
+  "description": "Comprehensive guide to the federal Lifeline program offering discounted phone and internet service to qualifying households. Learn about eligibility requirements, application process, and program benefits.",
+  "image": `${SITE_URL}/og-image.jpg`,
+  "author": {
+    "@type": "Organization",
+    "name": DOMAIN
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": DOMAIN,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${SITE_URL}/logo.png`
+    }
+  },
+  "datePublished": "2025-01-01",
+  "dateModified": "2025-01-01",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/lifeline-program`
+  }
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I combine Lifeline with other federal assistance programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, eligible households can receive both Lifeline and ACP benefits for maximum communication cost savings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there any credit requirements for Lifeline qualification?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, the Lifeline program does not require credit checks or credit history for qualification."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the typical approval timeline for Lifeline applications?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most online applications receive instant approval. If documentation is required, processing typically takes 1–3 business days."
+      }
+    }
+  ]
+};
 ---
 
 <Layout title={title} description={description}>
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": `${keyword} - Lifeline Free Phone Program`,
-    "description": description,
-    "author": {
-      "@type": "Organization",
-      "name": siteName
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": siteName,
-      "url": siteURL
-    },
-    "datePublished": "2025-12-09",
-    "dateModified": "2025-12-09",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${siteURL}/lifeline-program`
-    }
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How much does a Lifeline phone cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Lifeline phones are completely free. You get the phone at no cost, plus free monthly service with unlimited talk and text."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How long does it take to get approved?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most applications are approved within 24-48 hours. Once approved, your free phone ships within 3-5 business days."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I keep my current phone number?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, you can transfer your existing phone number to your new Lifeline phone at no extra charge."
-        }
-      }
-    ]
-  })} />
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqData)} />
 
   <!-- Breadcrumb Navigation -->
   <nav class="bg-gray-50 py-3">
-    <div class="container mx-auto px-4">
-      <div class="flex items-center space-x-2 text-sm">
-        <a href="/" class="text-[var(--color-primary)] hover:underline">Home</a>
-        <span class="text-gray-500">/</span>
-        <span class="text-gray-700">Lifeline Program</span>
-      </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-blue-600">Home</a></li>
+        <li class="text-gray-400">/</li>
+        <li><a href="/programs" class="hover:text-blue-600">Programs</a></li>
+        <li class="text-gray-400">/</li>
+        <li class="text-gray-900 font-medium">Lifeline Program</li>
+      </ol>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
-    <div class="container mx-auto px-4 text-center">
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        {keyword} - Lifeline Free Phone Program
+        <span class="text-blue-600">Lifeline Free Government Phone Program</span> | Federal Phone & Internet Service 2025
       </h1>
-      <p class="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
-        Get your free smartphone with unlimited talk, text, and data. No contracts, no credit checks, no hidden fees.
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+        The <strong>Lifeline Free Government Phone Program</strong> is a federal initiative designed to make phone and internet service accessible for qualifying Americans. 
+        Since 1985, Lifeline has helped millions maintain connections to employment, family, healthcare, and emergency services.
       </p>
-      <a href="/apply" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg">
-        Get Your Free Phone Now
-      </a>
-    </div>
-  </section>
-
-  <!-- Main Content -->
-  <div class="container mx-auto px-4 py-12">
-    <div class="max-w-4xl mx-auto">
       
-      <!-- What is Lifeline Section -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">What is the Lifeline Program?</h2>
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <p class="text-gray-700 mb-4">
-            The Lifeline program helps low-income Americans stay connected with free phone service. When you search for {keyword}, you're looking for real government assistance that provides essential communication services at no cost to you.
-          </p>
-          <p class="text-gray-700">
-            This federal program has helped millions of people get free phones and monthly service since 1985. {siteName} makes it easy to check your eligibility and apply for your free phone in minutes.
-          </p>
+      <!-- Social Proof -->
+      <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div>
+            <div class="text-3xl font-bold text-blue-600 mb-2">$9.25</div>
+            <div class="text-sm text-gray-600">Monthly Discount</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-green-600 mb-2">2.8M+</div>
+            <div class="text-sm text-gray-600">People Helped</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-yellow-600 mb-2">50</div>
+            <div class="text-sm text-gray-600">States Covered</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-purple-600 mb-2">1985</div>
+            <div class="text-sm text-gray-600">Program Started</div>
+          </div>
         </div>
-      </section>
+      </div>
+    </div>
 
-      <!-- What You Get Section -->
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">What You Get with Your Free Phone</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-semibold text-gray-900">Free Smartphone</h3>
+    <!-- Quick Eligibility Checker -->
+    <section class="mb-16">
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">Verify Your Lifeline Qualification</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          Check if you qualify for Lifeline Free Government Phone in just 2 minutes. Most Americans are eligible!
+        </p>
+        <a href="/apply" rel="noreferrer" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-xl text-lg shadow-lg transform hover:scale-105 transition-all duration-200 inline-block text-center">
+          CHECK ELIGIBILITY NOW
+        </a>
+        <p class="text-sm text-blue-200 mt-6">
+          ⚡ Takes 2 minutes • 🔒 100% Secure • 💰 No hidden fees
+        </p>
+      </div>
+    </section>
+
+    <!-- What is Lifeline -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        What is Lifeline Free Government Phone?
+      </h2>
+      
+      <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Free Government Phone Support</h3>
+            <p class="text-gray-600 mb-6">
+              Lifeline Free Government Phone provides a monthly discount of up to <strong>$9.25</strong> on phone or internet service. 
+              The program is available in every state, territory, and on Tribal lands. 
+              Qualifying households can choose between a free phone plan or a discount on their existing service.
+            </p>
+            
+            <div class="bg-blue-50 rounded-xl p-6">
+              <h4 class="font-semibold text-gray-900 mb-3">Key Benefits:</h4>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  Up to $9.25/month discount on phone or internet service
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  Available in all 50 states and territories
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  No contracts or credit checks required
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  Can be combined with other government assistance
+                </li>
+    </ul>
             </div>
-            <p class="text-gray-700">Brand new Android smartphone with all essential features including camera, GPS, and internet access.</p>
           </div>
           
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                </svg>
+          <div class="bg-green-50 rounded-xl p-6">
+            <h4 class="font-semibold text-gray-900 mb-4">Program History:</h4>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">1985</div>
+                <div>
+                  <h5 class="font-semibold text-gray-900">Program Established</h5>
+                  <p class="text-sm text-gray-600">Lifeline was created to ensure all Americans have access to essential communication services</p>
+                </div>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900">Unlimited Talk & Text</h3>
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">2005</div>
+                <div>
+                  <h5 class="font-semibold text-gray-900">Internet Service Added</h5>
+                  <p class="text-sm text-gray-600">Program expanded to include broadband internet service</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">2025</div>
+                <div>
+                  <h5 class="font-semibold text-gray-900">Current Program</h5>
+                  <p class="text-sm text-gray-600">Helping millions of Americans stay connected with modern communication services</p>
+                </div>
+              </div>
             </div>
-            <p class="text-gray-700">Make unlimited calls and send unlimited text messages anywhere in the United States.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        Who Qualifies for Lifeline?
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Income-Based Eligibility -->
+        <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Income-Based Eligibility</h3>
+          <p class="text-gray-600 mb-6">
+            You qualify if your household income is at or below <strong>135% of the Federal Poverty Guidelines</strong>.
+          </p>
+          
+          <div class="bg-gray-50 rounded-xl p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">2025 Income Limits</h4>
+            <div>
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-gray-200">
+                    <th class="text-left py-2 font-semibold text-gray-900">Household Size</th>
+                    <th class="text-left py-2 font-semibold text-gray-900">Max Annual Income</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                  <tr class="border-b border-gray-100">
+                    <td class="py-2">1 person</td>
+                    <td class="py-2">$20,331</td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-2">2 people</td>
+                    <td class="py-2">$27,594</td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-2">3 people</td>
+                    <td class="py-2">$34,857</td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-2">4 people</td>
+                    <td class="py-2">$42,120</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2">Each additional</td>
+                    <td class="py-2">+ $7,263</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">*Income limits updated for 2025. Check your state for exact numbers.</p>
+          </div>
+        </div>
+
+        <!-- Program-Based Eligibility -->
+        <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Program-Based Eligibility</h3>
+          <p class="text-gray-600 mb-6">
+            You automatically qualify if you or someone in your household participates in one of these government assistance programs:
+          </p>
+          
+          <div class="space-y-3">
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">SNAP (Food Stamps)</span>
+            </div>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">Medicaid</span>
+            </div>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">Supplemental Security Income (SSI)</span>
+            </div>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">Federal Public Housing Assistance (Section 8)</span>
+            </div>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">Veterans Pension or Survivors Benefit</span>
+            </div>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-900 font-medium">Tribal-specific programs (Tribal TANF, BIA General Assistance)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Apply -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        How to Apply for Lifeline
+      </h2>
+      
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Step-by-Step Application Process</h3>
+            <ol class="space-y-4">
+              <li class="flex items-start">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">1</span>
+                <div>
+                  <h4 class="font-semibold text-gray-900">Check Your Eligibility</h4>
+                  <p class="text-gray-600">Use our <a href="/eligibility" class="text-blue-600 underline">eligibility checker</a> to see if you qualify in just 2 minutes</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">2</span>
+                <div>
+                  <h4 class="font-semibold text-gray-900">Gather Required Documents</h4>
+                  <p class="text-gray-600">Proof of income or program participation, photo ID, and address verification</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">3</span>
+                <div>
+                  <h4 class="font-semibold text-gray-900">Choose a Provider</h4>
+                  <p class="text-gray-600">Compare <a href="/providers" class="text-blue-600 underline">providers</a> in your area and select the best option</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">4</span>
+                <div>
+                  <h4 class="font-semibold text-gray-900">Apply Online</h4>
+                  <p class="text-gray-600">Complete your application online or through your chosen provider</p>
+                </div>
+              </li>
+    </ol>
           </div>
           
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+          <div class="bg-white rounded-xl p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Required Documents</h3>
+            <ul class="space-y-3 text-gray-600">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                 </svg>
-              </div>
-              <h3 class="text-xl font-semibold text-gray-900">Free Monthly Data</h3>
-            </div>
-            <p class="text-gray-700">Get high-speed data every month to browse the internet, check email, and use apps.</p>
+                Proof of income (pay stub, tax return, Social Security statement)
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Proof of participation in qualifying programs
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Photo ID (driver's license, state ID, passport)
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Proof of address (utility bill, lease, government letter)
+              </li>
+    </ul>
           </div>
-          
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-lg flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-semibold text-gray-900">No Credit Check</h3>
-            </div
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        Benefits of the Lifeline Program
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="text-center p-6 bg-blue-50 rounded-xl">
+          <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Free Phone Service</h3>
+          <p class="text-gray-600 text-sm">Get free monthly phone service with unlimited talk and text</p>
+        </div>
+        
+        <div class="text-center p-6 bg-green-50 rounded-xl">
+          <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Emergency Access</h3>
+          <p class="text-gray-600 text-sm">Stay connected to emergency services and job opportunities</p>
+        </div>
+        
+        <div class="text-center p-6 bg-yellow-50 rounded-xl">
+          <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">No Hidden Fees</h3>
+          <p class="text-gray-600 text-sm">No contracts, no credit checks, and no surprise charges</p>
+        </div>
+        
+        <div class="text-center p-6 bg-purple-50 rounded-xl">
+          <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Family Connection</h3>
+          <p class="text-gray-600 text-sm">Stay connected with family, healthcare, and education</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        Frequently Asked Questions
+      </h2>
+      
+      <div class="space-y-6">
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Can I get Lifeline and ACP together?</h3>
+          <p class="text-gray-600">Yes, eligible households can receive both benefits for maximum savings.</p>
+        </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Is there a credit check?</h3>
+          <p class="text-gray-600">No, there are no credit checks required to qualify for Lifeline.</p>
+        </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">How long does approval take?</h3>
+          <p class="text-gray-600">Most applicants are approved instantly online. If documents are needed, approval may take 1–3 business days.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="text-center bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white">
+      <h2 class="text-3xl font-bold mb-4">Ready to Get Your Free Phone Service?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Join <strong>millions of Americans</strong> who already have free phone service through the Lifeline Program. 
+        The application takes less than 2 minutes and you could save <strong>$111 per year</strong>.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/apply" rel="noreferrer" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-xl text-lg shadow-lg transform hover:scale-105 transition-all duration-200 inline-block text-center">
+          CHECK ELIGIBILITY NOW
+        </a>
+        <a href="/acp-program" rel="noreferrer" class="bg-white/20 hover:bg-white/30 text-white font-bold py-4 px-8 rounded-xl text-lg border border-white/30 transition-all duration-200 inline-block text-center">
+          LEARN ABOUT ACP
+        </a>
+      </div>
+      <p class="text-sm text-blue-200 mt-6">
+        ⚡ Takes 2 minutes • 🔒 100% Secure • 💰 No hidden fees
+      </p>
+    </section>
+
+    <!-- Program Cities Section -->
+    <ProgramCities program="lifeline" />
+
+    <!-- Related Content Section -->
+    <RelatedContent currentPage="program" />
+  </main>
+</Layout>

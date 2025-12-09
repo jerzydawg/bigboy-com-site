@@ -1,149 +1,261 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+import RelatedContent from '../components/RelatedContent.astro';
+import ProgramCities from '../components/ProgramCities.astro';
+import { getSiteURL, getSiteName, getDomain } from '../lib/site-config';
 
-const siteName = getSiteName();
-const keyword = getKeyword();
-const domain = getDomain();
-const siteURL = getSiteURL();
+const SITE_URL = getSiteURL();
+const SITE_NAME = getSiteName();
+const DOMAIN = getDomain();
 
-const pageTitle = `${keyword} - ACP Free Internet & Phone | ${siteName}`;
-const pageDescription = "Get free internet and phone service through the ACP program. Qualify for up to $30/month discount plus free device. Apply today - no credit check required.";
-const canonicalURL = `${siteURL}/acp-program`;
+const title = `Affordable Connectivity Program (ACP) 2025 | Free Internet & Phone Service | ${DOMAIN}`;
+const description = "Access federal Affordable Connectivity Program benefits for discounted internet and phone service. Receive up to $30 monthly savings ($75 on Tribal lands). Verify eligibility online and connect with approved providers instantly.";
 
-const jsonLD = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@graph": [
+  "@type": "Article",
+  "headline": "Affordable Connectivity Program (ACP) 2025: Free Internet & Phone Service",
+  "description": "Get free or discounted internet and phone service through the Affordable Connectivity Program (ACP) 2025. Up to $30/month discount ($75 on Tribal lands). Check eligibility, apply online, and find providers. No credit check required.",
+  "author": {
+    "@type": "Organization",
+    "name": "Government Phone Service"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": DOMAIN,
+    "url": SITE_URL
+  },
+  "datePublished": "2025-01-08",
+  "dateModified": "2025-01-08",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/acp-program`
+  }
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@type": "Article",
-      "headline": pageTitle,
-      "description": pageDescription,
-      "url": canonicalURL,
-      "datePublished": "2025-12-09",
-      "dateModified": "2025-12-09",
-      "author": {
-        "@type": "Organization",
-        "name": siteName
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": siteName,
-        "url": siteURL
+      "@type": "Question",
+      "name": "What is the Affordable Connectivity Program (ACP)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Affordable Connectivity Program (ACP) is a federal benefit that helps low-income households pay for internet and phone service. It provides a monthly discount of up to $30 (or $75 on Tribal lands) to ensure everyone can stay connected."
       }
     },
     {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is the ACP program?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The Affordable Connectivity Program (ACP) provides eligible households with discounts up to $30 per month toward internet service and up to $75 per month for households on qualifying Tribal lands."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I get a free phone through ACP?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, eligible households can receive a one-time discount of up to $100 to purchase a laptop, desktop computer, or tablet from participating providers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I apply for the ACP program?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can apply online through the official ACP website, by mail, or through participating internet service providers. You'll need to provide documentation to verify your eligibility."
-          }
-        }
-      ]
+      "@type": "Question",
+      "name": "Who qualifies for ACP benefits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Households with income at or below 200% of Federal Poverty Guidelines, or those participating in programs like SNAP, Medicaid, WIC, Free/Reduced-Price School Lunch, or Federal Pell Grant qualify for ACP benefits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I get ACP and Lifeline together?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, eligible households can receive both ACP and Lifeline benefits for maximum savings on internet and phone service."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a credit check for ACP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, there are no credit checks required to qualify for the Affordable Connectivity Program."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does ACP approval take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most applicants are approved instantly online. If documents are needed, approval may take 1–3 business days."
+      }
     }
   ]
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} canonical={canonicalURL} jsonLD={jsonLD}>
-  <!-- Breadcrumb Navigation -->
-  <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <ol class="flex items-center space-x-2 text-sm">
-        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
-        <li class="text-gray-500">/</li>
-        <li class="text-gray-700">ACP Program</li>
+<Layout title={title} description={description}>
+  <!-- Structured Data for Article -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqData)} />
+
+  <main class="prose lg:prose-xl mx-auto py-12 px-4">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-blue-600">Home</a></li>
+        <li class="text-gray-400">/</li>
+        <li class="text-gray-900">ACP Program</li>
       </ol>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header Section -->
-    <header class="text-center mb-12">
-      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-        my gov phone - ACP Free Internet & Phone
-      </h1>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Get connected with the Affordable Connectivity Program. Free internet service, free phones, and no credit checks required.
+    <h1 class="text-4xl font-bold text-gray-900 mb-6">Affordable Connectivity Program (ACP) 2025 | Free Internet & Phone Service</h1>
+    
+    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8">
+      <p class="text-blue-800 font-medium">
+        <strong>Quick Fact:</strong> The ACP provides up to $30/month discount on internet and phone service ($75 on Tribal lands). 
+        <a href="/apply" rel="noreferrer" class="text-blue-600 hover:underline">Verify your eligibility now →</a>
       </p>
-    </header>
+    </div>
 
-    <!-- What Is ACP Section -->
-    <section class="mb-12">
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">What Is the ACP Program?</h2>
-        <p class="text-lg text-gray-700 mb-4">
-          The Affordable Connectivity Program helps millions of families get free internet and phone service every month. When you search for <strong style="color: var(--color-primary)">my gov phone</strong> options, ACP stands out as the largest federal program providing internet discounts to qualified households.
-        </p>
-        <p class="text-lg text-gray-700">
-          Unlike other programs, ACP covers both internet service and devices. You can get up to $30 off your monthly internet bill, plus a one-time discount up to $100 for a new phone, tablet, or computer. The program works with major carriers nationwide, making it easy to find service in your area.
-        </p>
-      </div>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">What is the Affordable Connectivity Program (ACP)?</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        The <strong>Affordable Connectivity Program (ACP)</strong> is a federal benefit that helps qualifying households pay for internet and phone service. ACP provides a monthly discount of up to $30 (or $75 on Tribal lands) to ensure everyone can maintain connectivity in our digital world.
+      </p>
+      <p class="text-gray-700">
+        The ACP was created to bridge the digital divide and make high-speed internet and phone service accessible to all Americans. It can be combined with the <a href="/lifeline-program" class="text-blue-600 hover:underline">Lifeline Free Government Phone</a> for even greater savings.
+      </p>
     </section>
 
-    <!-- What You Get Section -->
-    <section class="mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">What You Get With ACP</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Free Internet Service</h3>
-          <p class="text-gray-700">Up to $30 monthly discount on internet service. Many households get completely free internet when combined with low-cost plans.</p>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Who Qualifies for ACP Benefits?</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Income-Based Eligibility</h3>
+          <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>Household income at or below 200% of the Federal Poverty Guidelines</li>
+            <li>For a family of 4: $60,000 or less annually</li>
+            <li>For a single person: $29,160 or less annually</li>
+          </ul>
         </div>
-        
-        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Device Discount</h3>
-          <p class="text-gray-700">Get up to $100 off a new phone, tablet, or computer. Many devices are completely free after the discount.</p>
+        <div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Program-Based Eligibility</h3>
+          <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>SNAP (Food Stamps)</li>
+            <li>Medicaid</li>
+            <li>WIC (Women, Infants, and Children)</li>
+            <li>Free/Reduced-Price School Lunch Program</li>
+            <li>Federal Pell Grant (current award year)</li>
+            <li>Tribal-specific programs for those living on Tribal lands</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- Who Qualifies Section -->
-    <section class="mb-12">
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Who Qualifies for ACP?</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          Checking <strong style="color: var(--color-primary)">my gov phone</strong> eligibility through {siteName} is simple. You qualify if your household income is at or below 200% of Federal Poverty Guidelines or if you participate in certain assistance programs.
-        </p>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">How to Apply for ACP Benefits</h2>
+      <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+        <h3 class="text-xl font-medium text-green-800 mb-4">Simple 4-Step Application Process</h3>
+        <ol class="list-decimal list-inside space-y-3 text-green-700">
+          <li><strong>Check Eligibility:</strong> <a href="/apply" rel="noreferrer" class="text-green-600 hover:underline">Use our eligibility checker</a> to see if you qualify</li>
+          <li><strong>Gather Documents:</strong> Proof of income or program participation</li>
+          <li><strong>Choose Provider:</strong> <a href="/providers" class="text-green-600 hover:underline">Find ACP providers</a> in your area</li>
+          <li><strong>Apply Online:</strong> Complete application through your chosen provider</li>
+        </ol>
+      </div>
+      <p class="text-gray-700">
+        <strong>Ready to apply?</strong> Most applications are approved instantly online. No credit checks or hidden fees!
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">ACP Benefits & Savings</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-blue-800 mb-3">Monthly Savings</h3>
+          <ul class="space-y-2 text-blue-700">
+            <li>• Up to $30/month discount on internet service</li>
+            <li>• Up to $75/month on Tribal lands</li>
+            <li>• One-time $100 discount on devices</li>
+            <li>• Can be combined with Lifeline benefits</li>
+          </ul>
+        </div>
+        <div class="bg-green-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-green-800 mb-3">Additional Benefits</h3>
+          <ul class="space-y-2 text-green-700">
+            <li>• Access to online education and telehealth</li>
+            <li>• Job search and remote work opportunities</li>
+            <li>• Stay connected with family and emergency services</li>
+            <li>• No contracts or credit checks required</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Can I get ACP and Lifeline together?</h3>
+          <p class="text-gray-700">Yes, eligible households can receive both ACP and Lifeline benefits for maximum savings. This can provide up to $34.25/month in combined discounts on your phone and internet service.</p>
+        </div>
         
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Income Guidelines</h3>
-            <ul class="space-y-2 text-gray-700">
-              <li class="flex items-center">
-                <svg class="w-5 h-5 mr-2 flex-shrink-0" style="color: var(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                1 person: $31,200 or less
-              </li>
-              <li class="flex items-center">
-                <svg class="w-5 h-5 mr-2 flex-shrink-0" style="color: var(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Is there a credit check for ACP?</h3>
+          <p class="text-gray-700">No, there are no credit checks required to qualify for the Affordable Connectivity Program. Your eligibility is based on income or participation in qualifying government programs.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">How long does ACP approval take?</h3>
+          <p class="text-gray-700">Most applicants are approved instantly when applying online. If additional documents are needed for verification, approval may take 1–3 business days.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">What documents do I need to apply?</h3>
+          <p class="text-gray-700">You'll need proof of income (pay stubs, tax returns) or proof of participation in qualifying programs (benefit letters, award letters). Your chosen provider will guide you through the specific requirements.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Can I keep my current provider?</h3>
+          <p class="text-gray-700">Yes, if your current internet or phone provider participates in the ACP program. Check with your provider or use our <a href="/providers" class="text-blue-600 hover:underline">provider finder</a> to see available options in your area.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-lg mb-8">
+      <h2 class="text-2xl font-bold mb-4">Ready to Get Connected?</h2>
+      <p class="text-lg mb-6">Join millions of Americans who are already saving on their internet and phone service through the ACP program.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/apply" rel="noreferrer" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Check Your Eligibility
+        </a>
+        <a href="/providers" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Find Providers
+        </a>
+      </div>
+    </section>
+
+    <!-- Program Cities Section -->
+    <ProgramCities program="acp" />
+
+    <!-- Related Content Section -->
+    <RelatedContent currentPage="program" />
+
+    <div class="bg-gray-50 p-6 rounded-lg mb-8">
+      <p class="text-gray-700 mb-4">
+        <strong>Need help?</strong> Visit our <a href="/faq" class="text-blue-600 hover:underline">FAQ page</a> for more answers, or <a href="/contact" class="text-blue-600 hover:underline">contact us</a> for personalized assistance. 
+        The ACP program is here to help you stay connected!
+      </p>
+    </div>
+
+    <!-- Related Programs Section -->
+    <section class="bg-white border-t border-gray-200 py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Related Programs & Resources</h2>
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <a href="/lifeline-program" class="bg-blue-50 rounded-lg p-6 hover:bg-blue-100 transition-colors">
+            <h3 class="text-lg font-bold text-blue-600 mb-2">Lifeline Program</h3>
+            <p class="text-sm text-gray-600">Learn about the federal Lifeline program and how it can be combined with ACP for maximum savings.</p>
+          </a>
+          <a href="/programs" class="bg-green-50 rounded-lg p-6 hover:bg-green-100 transition-colors">
+            <h3 class="text-lg font-bold text-green-600 mb-2">All Programs</h3>
+            <p class="text-sm text-gray-600">Compare all available government phone and internet assistance programs in one place.</p>
+          </a>
+          <a href="/eligibility" class="bg-purple-50 rounded-lg p-6 hover:bg-purple-100 transition-colors">
+            <h3 class="text-lg font-bold text-purple-600 mb-2">Check Eligibility</h3>
+            <p class="text-sm text-gray-600">Quickly check if you qualify for ACP and other government assistance programs.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

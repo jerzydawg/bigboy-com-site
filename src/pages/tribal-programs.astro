@@ -1,177 +1,319 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+import { getSiteURL, getSiteName, getDomain } from '../lib/site-config';
 
-const siteName = getSiteName();
-const keyword = getKeyword();
-const domain = getDomain();
-const siteURL = getSiteURL();
+const SITE_URL = getSiteURL();
+const SITE_NAME = getSiteName();
+const DOMAIN = getDomain();
 
-const title = `${keyword} - Tribal Lands Free Phone | Enhanced Benefits`;
-const description = "Get enhanced tribal free phone benefits with extra discounts and improved coverage. Native American families qualify for better Lifeline programs on tribal lands.";
-const canonical = `${siteURL}/tribal-programs`;
----
+const title = `Tribal Free Government Phone Programs 2025: Enhanced Free Government Phone Benefits for Tribal Lands | ${DOMAIN}`;
+const description = "Access enhanced federal communication assistance benefits designed specifically for tribal communities. Receive higher monthly discounts and expanded eligibility criteria for tribal lands.";
 
-<Layout title={title} description={description} canonical={canonical}>
-  <script type="application/ld+json">
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tribal Phone & Internet Programs 2025: Enhanced Benefits for Tribal Lands",
+  "description": "Discover enhanced tribal phone and internet programs with higher discounts. Up to $75/month ACP benefits and $34.25/month Lifeline on tribal lands. Check eligibility and find providers. Updated for 2025.",
+  "author": {
+    "@type": "Organization",
+    "name": "Government Phone Service"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": DOMAIN,
+    "url": SITE_URL
+  },
+  "datePublished": "2025-01-08",
+  "dateModified": "2025-01-08",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/tribal-programs`
+  }
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "my gov phone - Tribal Lands Free Phone Programs",
-      "description": "Enhanced free phone benefits for Native American families living on tribal lands with improved coverage and extra discounts.",
-      "author": {
-        "@type": "Organization",
-        "name": "big boy"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "big boy"
-      },
-      "datePublished": "2025-12-09",
-      "dateModified": "2025-12-09",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://bigboy.com/tribal-programs"
+      "@type": "Question",
+      "name": "What are tribal phone and internet programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tribal programs provide higher discounts and additional support for eligible households on tribal lands. These benefits are available through Lifeline, ACP, and state initiatives, offering enhanced savings compared to standard federal programs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who qualifies for tribal benefits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Households on federally recognized tribal lands who meet income or program participation requirements qualify for tribal benefits. This includes residents of tribal lands who participate in programs like SNAP, Medicaid, or meet income guidelines."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the enhanced benefits for tribal lands?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tribal lands receive enhanced benefits including up to $34.25/month off phone service (Lifeline), up to $75/month off internet service (ACP), one-time device discounts, and special support for remote areas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I get both tribal and federal benefits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can combine tribal, state, and federal benefits for maximum savings. Tribal programs work alongside standard federal programs to provide enhanced discounts and support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I apply for tribal programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To apply for tribal programs, check your eligibility, gather required documents (proof of tribal affiliation or residence), choose a provider that serves tribal lands, and apply online or through your provider."
       }
     }
-  </script>
+  ]
+};
+---
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Do tribal members get extra benefits?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, tribal members receive enhanced benefits including additional monthly discounts, improved network coverage, and priority customer support."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use my tribal free phone off the reservation?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, your tribal free phone works nationwide with full coverage across the United States, not just on tribal lands."
-          }
-        }
-      ]
-    }
-  </script>
+<Layout title={title} description={description}>
+  <!-- Structured Data for Article -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqData)} />
 
-  <!-- Breadcrumb Navigation -->
-  <nav class="bg-gray-50 py-4 mb-8" aria-label="Breadcrumb">
-    <div class="container mx-auto px-4">
-      <ol class="flex items-center space-x-2 text-sm">
-        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
-        <li class="text-gray-500">/</li>
-        <li class="text-gray-700" aria-current="page">Tribal Programs</li>
+  <main class="prose lg:prose-xl mx-auto py-12 px-4">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-blue-600">Home</a></li>
+        <li class="text-gray-400">/</li>
+        <li class="text-gray-900">Tribal Programs</li>
       </ol>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <!-- Hero Section -->
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        my gov phone - Enhanced Tribal Free Phone Benefits
-      </h1>
-      <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-        Native American families on tribal lands receive enhanced free phone benefits with extra discounts, improved coverage, and priority support through special federal programs.
+    <h1 class="text-4xl font-bold text-gray-900 mb-6">Tribal Free Government Phone Programs 2025: Enhanced Free Government Phone Benefits for Tribal Lands</h1>
+    
+    <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-8">
+      <p class="text-purple-800 font-medium">
+        <strong>Enhanced Benefits:</strong> Tribal communities receive higher federal discounts - up to $75/month for ACP and $34.25/month for Lifeline. 
+        <a href="/apply" rel="noreferrer" class="text-purple-600 hover:underline">Verify your tribal eligibility now →</a>
       </p>
-      <a href="/apply" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg inline-block">
-        Get Your Tribal Free Phone
-      </a>
     </div>
 
-    <!-- Intro Section -->
-    <section class="mb-12">
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          Families living on tribal lands receive special consideration for free government phone programs. Your <strong>my gov phone</strong> comes with enhanced benefits that go beyond standard Lifeline programs, including additional monthly discounts and improved network coverage specifically designed for tribal communities.
-        </p>
-        <p class="text-lg text-gray-700 leading-relaxed">
-          The Enhanced Tribal Lifeline program recognizes the unique communication challenges faced by Native American families and provides superior benefits to ensure reliable connectivity. Whether you live on or off tribal lands, these enhanced benefits follow you wherever you go.
-        </p>
-      </div>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">What Are Tribal Free Government Phone Programs?</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        Tribal communities often encounter unique challenges in accessing affordable communication services. The federal government and many states provide specialized programs and enhanced benefits for residents of tribal lands to help bridge the digital divide.
+      </p>
+      <p class="text-gray-700">
+        Tribal communication assistance programs offer higher discounts and additional support for eligible households on tribal lands. These benefits are available through <a href="/lifeline-program" class="text-blue-600 hover:underline">Lifeline</a>, <a href="/acp-program" class="text-blue-600 hover:underline">ACP</a>, and state initiatives.
+      </p>
     </section>
 
-    <!-- Tribal Benefits Section -->
-    <section class="mb-12" id="tribal-benefits">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Special Tribal Benefits</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <span class="text-white font-bold text-xl">$</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Additional Monthly Discount</h3>
-          <p class="text-gray-700">
-            Tribal members receive an extra $25 monthly discount on top of standard Lifeline benefits, providing more value for your free phone service.
-          </p>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Enhanced Benefits for Tribal Lands</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-purple-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-purple-800 mb-3">Lifeline Benefits (Tribal)</h3>
+          <ul class="space-y-2 text-purple-700">
+            <li>• Up to $34.25/month off phone service</li>
+            <li>• Free or discounted wireless service</li>
+            <li>• Free or discounted landline service</li>
+            <li>• No contracts or credit checks</li>
+            <li>• Can be combined with ACP benefits</li>
+          </ul>
         </div>
-
-        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <span class="text-white font-bold text-xl">📶</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Enhanced Network Coverage</h3>
-          <p class="text-gray-700">
-            Priority network access and improved coverage on tribal lands ensure reliable service even in remote areas.
-          </p>
-        </div>
-
-        <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-100">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <span class="text-white font-bold text-xl">🎧</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Priority Customer Support</h3>
-          <p class="text-gray-700">
-            Dedicated customer service representatives who understand tribal community needs and provide specialized support.
-          </p>
-        </div>
-
-        <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border border-orange-100">
-          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-            <span class="text-white font-bold text-xl">📱</span>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Premium Phone Options</h3>
-          <p class="text-gray-700">
-            Access to upgraded smartphones and devices that work better in tribal land environments with extended battery life.
-          </p>
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-blue-800 mb-3">ACP Benefits (Tribal)</h3>
+          <ul class="space-y-2 text-blue-700">
+            <li>• Up to $75/month off internet service</li>
+            <li>• One-time $100 device discount</li>
+            <li>• High-speed internet access</li>
+            <li>• Can be combined with Lifeline</li>
+            <li>• Special support for remote areas</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- What You Get Section -->
-    <section class="mb-12" id="what-you-get">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">What Your Tribal Free Phone Includes</h2>
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="text-center">
-            <div class="text-4xl mb-4">📱</div>
-            <h3 class="font-semibold text-gray-900 mb-2">Free Smartphone</h3>
-            <p class="text-gray-600">Modern Android device with enhanced durability for tribal land conditions</p>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl mb-4">💬</div>
-            <h3 class="font-semibold text-gray-900 mb-2">Unlimited Talk & Text</h3>
-            <p class="text-gray-600">Unlimited nationwide calling and texting with no restrictions</p>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl mb-4">🌐</div>
-            <h3 class="font-semibold text-gray-900 mb-2">High-Speed Data</h3>
-            <p class="text-gray-600">Monthly high-speed data allowance with priority network access</p>
-          </div>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Tribal vs Standard Benefits Comparison</h2>
+      <div>
+        <table class="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 p-3 text-left">Benefit</th>
+              <th class="border border-gray-300 p-3 text-left">Standard Program</th>
+              <th class="border border-gray-300 p-3 text-left">Tribal Lands</th>
+              <th class="border border-gray-300 p-3 text-left">Savings Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 p-3 font-medium">Lifeline Phone</td>
+              <td class="border border-gray-300 p-3">$9.25/month</td>
+              <td class="border border-gray-300 p-3">$34.25/month</td>
+              <td class="border border-gray-300 p-3 text-green-600">+$25/month</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-3 font-medium">ACP Internet</td>
+              <td class="border border-gray-300 p-3">$30/month</td>
+              <td class="border border-gray-300 p-3">$75/month</td>
+              <td class="border border-gray-300 p-3 text-green-600">+$45/month</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-3 font-medium">Device Discount</td>
+              <td class="border border-gray-300 p-3">$100 one-time</td>
+              <td class="border border-gray-300 p-3">$100 one-time</td>
+              <td class="border border-gray-300 p-3">Same</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-3 font-medium">Combined Monthly Savings</td>
+              <td class="border border-gray-300 p-3">$39.25/month</td>
+              <td class="border border-gray-300 p-3">$109.25/month</td>
+              <td class="border border-gray-300 p-3 text-green-600">+$70/month</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Who Qualifies for Tribal Benefits?</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Residence Requirements</h3>
+          <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>Live on federally recognized tribal lands</li>
+            <li>Reside within tribal boundaries</li>
+            <li>Have a valid tribal address</li>
+            <li>Meet tribal residency verification</li>
+          </ul>
         </div>
-        <div class="mt-8 pt-8 border-t border-gray-200">
-          <p class="text-center text-gray-700">
-            Through {siteName}, your <strong>my gov phone</strong> tribal benefits are processed quickly with same-day approval for qualified applicants.
-          </p>
+        <div>
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Eligibility Criteria</h3>
+          <ul class="list-disc list-inside space-y-2 text-gray-700">
+            <li>Household income at or below 200% of Federal Poverty Guidelines</li>
+            <li>Participation in qualifying programs (SNAP, Medicaid, etc.)</li>
+            <li>One benefit per household</li>
+            <li>Must be 18+ or emancipated minor</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- Who Qualifies Section -->
-    <section class="
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">How to Apply for Tribal Programs</h2>
+      <div class="bg-gradient-to-r from-purple-500 to-blue-500 text-white p-8 rounded-lg mb-6">
+        <h3 class="text-xl font-medium mb-4">Application Process for Tribal Benefits</h3>
+        <ol class="list-decimal list-inside space-y-3 text-lg">
+          <li><strong>Check Eligibility:</strong> <a href="/apply" rel="noreferrer" class="text-yellow-200 hover:underline">Verify your tribal eligibility</a> and residence requirements</li>
+          <li><strong>Gather Documents:</strong> Proof of tribal affiliation, residence, and income/program participation</li>
+          <li><strong>Find Providers:</strong> <a href="/providers" class="text-yellow-200 hover:underline">Locate providers</a> that serve tribal lands</li>
+          <li><strong>Apply Online:</strong> Complete application through your chosen provider</li>
+        </ol>
+      </div>
+      <p class="text-gray-700">
+        <strong>Important:</strong> Tribal benefits require proof of residence on tribal lands. Make sure you have the necessary documentation before applying.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Special Considerations for Tribal Lands</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-yellow-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-yellow-800 mb-3">Remote Area Support</h3>
+          <ul class="space-y-2 text-yellow-700">
+            <li>• Special satellite internet options</li>
+            <li>• Extended coverage areas</li>
+            <li>• Installation assistance</li>
+            <li>• Technical support in native languages</li>
+            <li>• Community outreach programs</li>
+          </ul>
+        </div>
+        <div class="bg-green-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-green-800 mb-3">Additional Resources</h3>
+          <ul class="space-y-2 text-green-700">
+            <li>• Tribal liaison support</li>
+            <li>• Cultural sensitivity training</li>
+            <li>• Community education programs</li>
+            <li>• Partnership with tribal governments</li>
+            <li>• Specialized customer service</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Who qualifies for tribal benefits?</h3>
+          <p class="text-gray-700">Households on federally recognized tribal lands who meet income or program participation requirements qualify for tribal benefits. This includes residents of tribal lands who participate in programs like SNAP, Medicaid, or meet income guidelines.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Can I get both tribal and federal benefits?</h3>
+          <p class="text-gray-700">Yes, you can combine tribal, state, and federal benefits for maximum savings. Tribal programs work alongside standard federal programs to provide enhanced discounts and support.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">What documents do I need for tribal benefits?</h3>
+          <p class="text-gray-700">You'll need proof of residence on tribal lands, tribal affiliation documentation, and proof of income or program participation. Your provider will guide you through the specific requirements for your tribal area.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Are there special providers for tribal lands?</h3>
+          <p class="text-gray-700">Yes, some providers specialize in serving tribal lands and offer enhanced support, cultural sensitivity, and specialized services for tribal communities. Check with your tribal government or our provider finder for options.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">How much can I save with tribal benefits?</h3>
+          <p class="text-gray-700">With tribal benefits, you can save up to $109.25/month when combining Lifeline ($34.25) and ACP ($75) benefits. This is $70 more than standard federal benefits alone.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8 rounded-lg mb-8">
+      <h2 class="text-2xl font-bold mb-4">Access Enhanced Tribal Benefits</h2>
+      <p class="text-lg mb-6">Don't miss out on the enhanced benefits available to tribal land residents. Get connected with maximum savings!</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/apply" rel="noreferrer" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Check Tribal Eligibility
+        </a>
+        <a href="/providers" class="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Find Tribal Providers
+        </a>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Related Government Phone Programs</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/lifeline-program" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Lifeline Program</h3>
+          <p class="text-gray-600">Federal program providing enhanced phone service discounts for tribal lands.</p>
+        </a>
+        <a href="/acp-program" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">ACP Program</h3>
+          <p class="text-gray-600">Affordable Connectivity Program with enhanced benefits for tribal residents.</p>
+        </a>
+        <a href="/state-programs" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">State Programs</h3>
+          <p class="text-gray-600">State-specific assistance programs that may offer additional tribal benefits.</p>
+        </a>
+      </div>
+    </section>
+
+    <div class="bg-gray-50 p-6 rounded-lg">
+      <p class="text-gray-700">
+        <strong>Need help with tribal benefits?</strong> Visit our <a href="/faq" class="text-blue-600 hover:underline">FAQ page</a> for more answers, or <a href="/contact" class="text-blue-600 hover:underline">contact us</a> for personalized assistance with tribal programs. 
+        We're here to help you access the enhanced benefits available to tribal land residents!
+      </p>
+    </div>
+  </main>
+</Layout>

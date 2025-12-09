@@ -1,19 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteURL, getSiteName, getDomain, getKeyword } from '../lib/site-config';
+import { getSiteURL, getSiteName, getDomain } from '../lib/site-config';
 
 export const prerender = true;
 
 const SITE_URL = getSiteURL();
 const SITE_NAME = getSiteName();
 const DOMAIN = getDomain();
-const keyword = getKeyword();
-
-// Smart keyword formatting - avoid "Get Your my gov phone" grammar issues
-const keywordLower = keyword.toLowerCase();
-const keywordDisplay = keywordLower.startsWith('my ') || keywordLower.startsWith('your ') || keywordLower.startsWith('a ') || keywordLower.startsWith('the ')
-  ? keyword
-  : `Your ${keyword}`;
 
 const title = `Contact Free Government Phone Support | Federal Program Assistance & Help 2025 | ${DOMAIN}`;
 const description = "Get expert assistance with federal communication assistance programs. Contact our support team for help with Lifeline, ACP, or other federal communication services. Available 24/7.";
@@ -201,7 +194,7 @@ const contactData = {
           </div>
         </div>
         
-        <!-- Contact Information Sidebar -->
+        <!-- Contact Information -->
         <div class="space-y-6">
           <!-- Response Time Info -->
           <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
@@ -303,11 +296,6 @@ const contactData = {
       
       <div class="grid md:grid-cols-3 gap-8">
         <div class="text-center">
-          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-            </svg>
-          </div>
           <h3 class="text-xl font-bold text-gray-900 mb-3">Expert Guidance</h3>
           <p class="text-gray-600">
             Our team has helped millions of Americans get free phone service. We know the process inside and out.
@@ -315,11 +303,6 @@ const contactData = {
         </div>
         
         <div class="text-center">
-          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
           <h3 class="text-xl font-bold text-gray-900 mb-3">24/7 Support</h3>
           <p class="text-gray-600">
             Need help anytime? Our support team is available around the clock to assist you.
@@ -327,11 +310,6 @@ const contactData = {
         </div>
         
         <div class="text-center">
-          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-            </svg>
-          </div>
           <h3 class="text-xl font-bold text-gray-900 mb-3">100% Secure</h3>
           <p class="text-gray-600">
             Your information is protected with bank-level encryption. We never share your data.
@@ -342,7 +320,7 @@ const contactData = {
 
     <!-- CTA Section -->
     <section class="text-center bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white">
-      <h2 class="text-3xl font-bold mb-4">Ready to Get {keywordDisplay}?</h2>
+      <h2 class="text-3xl font-bold mb-4">We're Here to Help</h2>
       <p class="text-xl mb-8 max-w-2xl mx-auto">
         Don't hesitate to reach out with any questions or concerns. Our mission is to help every eligible American get the free phone service they deserve.
       </p>
@@ -379,3 +357,6 @@ const contactData = {
     </section>
   </main>
 </Layout>
+
+
+</Layout> 

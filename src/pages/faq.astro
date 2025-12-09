@@ -1,165 +1,597 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+import { getSiteURL } from '../lib/site-config';
 
-const siteName = getSiteName();
-const keyword = getKeyword();
-const domain = getDomain();
-const siteURL = getSiteURL();
+const SITE_URL = getSiteURL();
 
-const title = `${keyword} - Common Questions Answered | ${siteName}`;
-const description = `Get answers to the most common questions about ${keyword} programs. Learn about eligibility, applications, and free phone services available in 2025.`;
-const canonicalURL = `${siteURL}/faq`;
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "headline": title,
-      "description": description,
-      "url": canonicalURL,
-      "datePublished": "2025-12-09",
-      "dateModified": "2025-12-09",
-      "author": {
-        "@type": "Organization",
-        "name": siteName
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": siteName
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": canonicalURL
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Who qualifies for a free government phone?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You qualify for a free government phone if you receive Medicaid, SNAP, SSI, Federal Public Housing, or have a household income at or below 135% of Federal Poverty Guidelines."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I apply for a free phone?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Apply online through approved providers, visit local offices, or call the National Verifier. You'll need proof of income or benefit participation and a valid ID."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What's included with my free phone service?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Free phone service typically includes unlimited talk and text, data allowance (varies by provider), voicemail, caller ID, and call waiting at no monthly cost."
-          }
-        }
-      ]
-    }
-  ]
-};
+// SEO Meta Tags - Completely rewritten for uniqueness
+const title = "Free Government Phone FAQ | Common Questions & Answers 2025";
+const description = "Find comprehensive answers to frequently asked questions about federal communication assistance programs, qualification requirements, and application procedures.";
+const canonical = `${SITE_URL}/faq`;
 ---
 
-<Layout title={title} description={description} canonicalURL={canonicalURL}>
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  </Fragment>
-
-  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    <!-- Breadcrumb -->
-    <nav class="bg-white shadow-sm border-b">
-      <div class="max-w-6xl mx-auto px-4 py-3">
-        <ol class="flex items-center space-x-2 text-sm">
-          <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
-          <li class="text-gray-500">/</li>
-          <li class="text-gray-700 font-medium">FAQ</li>
-        </ol>
-      </div>
-    </nav>
-
-    <div class="max-w-6xl mx-auto px-4 py-8">
-      <!-- Header Section -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          {keyword} - Common Questions Answered
+<Layout title={title} description={description} canonical={canonical}>
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white py-20">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Free Government Phone FAQ
         </h1>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          Get instant answers to the most frequently asked questions about free government phone programs and find out how to get your free phone today.
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Discover answers to frequently asked questions about federal communication assistance programs, 
+          qualification criteria, and application procedures.
         </p>
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6 max-w-2xl mx-auto">
+          <p class="text-lg mb-4">Quick Navigation</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+            <div class="flex items-center">
+              <span class="text-blue-300 mr-2">•</span>
+              <span>Eligibility</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-blue-300 mr-2">•</span>
+              <span>Application</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-blue-300 mr-2">•</span>
+              <span>Benefits</span>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Main Content -->
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-8">
-          
-          <!-- Intro Section -->
-          <section class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Everything You Need to Know</h2>
-            <p class="text-gray-700 text-lg leading-relaxed mb-6">
-              Thousands of Americans ask questions about <strong style="color: var(--color-primary)">{keyword}</strong> programs every day. Whether you're wondering about eligibility, the application process, or what services you'll receive, we've compiled the most common questions and clear answers to help you get your free phone quickly.
+    <!-- FAQ Categories -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <div class="text-center">
+            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl" aria-label="Checkmark icon">✅</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Qualification Requirements</h3>
+            <p class="text-gray-600">
+              Understand eligibility criteria and who qualifies for federal communication assistance.
             </p>
-            <p class="text-gray-700 text-lg leading-relaxed">
-              The {siteName} team has helped countless people understand these programs and successfully apply for their free phone service. Read through these frequently asked questions to find the information you need, then take the next step toward getting connected.
+          </div>
+          <div class="text-center">
+            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl" aria-label="Document icon">📝</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Application Procedures</h3>
+            <p class="text-gray-600">
+              Learn about the application process and required documentation for approval.
             </p>
-          </section>
+          </div>
+          <div class="text-center">
+            <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl" aria-label="Phone icon">📱</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Program Benefits</h3>
+            <p class="text-gray-600">
+              Explore the benefits included with your federal communication assistance and usage guidelines.
+            </p>
+          </div>
+        </div>
 
-          <!-- Eligibility FAQs -->
-          <section id="eligibility-faqs" class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <div class="w-10 h-10 rounded-full mr-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              Eligibility Questions
+        <!-- FAQ Accordion -->
+        <div class="max-w-4xl mx-auto space-y-4">
+          <!-- Eligibility Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-blue-600 text-white p-6 text-xl font-bold">
+              Eligibility & Qualification
             </h2>
             
-            <div class="space-y-6">
-              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Who qualifies for a free government phone?</h3>
-                <p class="text-gray-700 mb-3">You qualify if you receive any of these benefits:</p>
-                <ul class="list-disc list-inside text-gray-700 space-y-1 ml-4">
-                  <li>Medicaid</li>
-                  <li>SNAP (Food Stamps)</li>
-                  <li>Supplemental Security Income (SSI)</li>
-                  <li>Federal Public Housing Assistance</li>
-                  <li>Veterans Pension or Survivors Pension</li>
-                </ul>
-                <p class="text-gray-700 mt-3">Or if your household income is at or below 135% of Federal Poverty Guidelines.</p>
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Who qualifies for free government phone service?</h3>
+                <p class="text-gray-600">
+                  You may qualify if your household income is at or below 135% of the Federal Poverty Guidelines, 
+                  or if you participate in government assistance programs like Medicaid, SNAP, SSI, or Federal 
+                  Public Housing Assistance. Tribal communities may have enhanced eligibility criteria.
+                </p>
               </div>
 
-              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Do I need good credit to get a free phone?</h3>
-                <p class="text-gray-700">No credit check required! Your <strong style="color: var(--color-primary)">{keyword}</strong> approval is based solely on income or benefit eligibility, not your credit score or payment history.</p>
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I qualify if I already have a phone?</h3>
+                <p class="text-gray-600">
+                  Yes! You can qualify for free government phone service even if you currently have a phone. 
+                  You can either receive a free smartphone or apply the discount to your existing service, 
+                  depending on your chosen provider.
+                </p>
               </div>
 
-              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Can I get a free phone if I'm already on someone else's plan?</h3>
-                <p class="text-gray-700">Yes, you can still qualify for your own free government phone even if you're currently on a family plan or sharing someone else's service.</p>
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if I live in a household with other people?</h3>
+                <p class="text-gray-600">
+                  The income limits apply to your entire household. All household members' income is counted 
+                  together to determine eligibility. Only one person per household can receive the benefit.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Do I need to be a U.S. citizen to qualify?</h3>
+                <p class="text-gray-600">
+                  You must be a U.S. citizen or legal permanent resident to qualify for government phone programs. 
+                  You'll need to provide proof of citizenship or residency during the application process.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What income level qualifies for free government phone?</h3>
+                <p class="text-gray-600">
+                  Your household income must be at or below 135% of the Federal Poverty Guidelines. For a single person, 
+                  this is approximately $20,331 per year. For a family of four, it's approximately $41,400 per year. 
+                  Income limits vary by household size and state.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can college students qualify for free government phone?</h3>
+                <p class="text-gray-600">
+                  Yes, college students can qualify if they meet the income requirements or participate in qualifying 
+                  government assistance programs. Students who receive Pell Grants or participate in other federal aid 
+                  programs may also qualify.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if my income changes after I'm approved?</h3>
+                <p class="text-gray-600">
+                  You must report any significant income changes during your annual recertification. If your income 
+                  increases above the eligibility threshold, you may lose your benefits. However, you can continue 
+                  receiving service until your next recertification date.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">Are there age requirements for free government phone?</h3>
+                <p class="text-gray-600">
+                  There are no specific age requirements. However, applicants under 18 may need a parent or guardian 
+                  to apply on their behalf, depending on the provider's policies.
+                </p>
               </div>
             </div>
-          </section>
+          </div>
 
-          <!-- Application FAQs -->
-          <section id="application-faqs" class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <div class="w-10 h-10 rounded-full mr-4 flex items-center justify-center" style="background-color: var(--color-primary)">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                </svg>
-              </div>
+          <!-- Application Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-green-600 text-white p-6 text-xl font-bold">
               Application Process
             </h2>
             
-            <div class="space-y-6">
-              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">How do I apply for a free phone?</h3>
-                <p class="text-gray-700 mb-3">Three easy ways to apply:</p>
-                <ul class="list-disc list-inside text-gray-700 space-y-1 ml-4">
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">How long does the application process take?</h3>
+                <p class="text-gray-600">
+                  Most applications are approved within minutes when submitted online. If additional documentation 
+                  is required for verification, approval may take 1-3 business days. Your free phone typically 
+                  arrives within 5-7 business days after approval.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What documents do I need to apply?</h3>
+                <p class="text-gray-600">
+                  You'll need proof of income (pay stubs, tax returns) or documentation showing participation 
+                  in qualifying government programs, a valid photo ID, and proof of your current address. 
+                  The specific documents required may vary by provider.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Is there a credit check required?</h3>
+                <p class="text-gray-600">
+                  No credit check is required for government phone programs. Approval is based solely on 
+                  income or program participation, not your credit history or score.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I apply online or do I need to visit an office?</h3>
+                <p class="text-gray-600">
+                  You can apply entirely online through our secure application portal. The process is designed 
+                  to be convenient and accessible from anywhere with internet access. No office visits are required.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What happens if my application is denied?</h3>
+                <p class="text-gray-600">
+                  If your application is denied, you'll receive a notice explaining the reason. Common reasons include 
+                  income above the threshold or incomplete documentation. You can appeal the decision or reapply with 
+                  updated information. Most providers offer a review process for denied applications.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">How do I prove I participate in a qualifying program?</h3>
+                <p class="text-gray-600">
+                  You can provide benefit award letters, enrollment cards, or official documentation from programs like 
+                  Medicaid, SNAP, SSI, or Federal Public Housing Assistance. Most providers accept digital copies of these 
+                  documents uploaded during the online application process.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I apply for multiple people in my household?</h3>
+                <p class="text-gray-600">
+                  Only one person per household can receive the Lifeline or ACP benefit. However, if you have multiple 
+                  eligible adults living at different addresses (like college students), they may qualify separately 
+                  if they meet the independent household criteria.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">Is there an application fee?</h3>
+                <p class="text-gray-600">
+                  No, there are no application fees for government phone programs. The application process is completely 
+                  free. Be wary of any service that charges fees to help you apply - legitimate providers never charge 
+                  for applications.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service & Benefits Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-purple-600 text-white p-6 text-xl font-bold">
+              Service & Benefits
+            </h2>
+            
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What's included with my free phone service?</h3>
+                <p class="text-gray-600">
+                  Your free service includes unlimited talk and text, monthly data allowance, and a free smartphone. 
+                  The exact data amount varies by provider, but most offer generous plans suitable for everyday use.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I keep my current phone number?</h3>
+                <p class="text-gray-600">
+                  Yes, most providers support number porting, allowing you to transfer your existing phone number 
+                  to your new free service. This process typically takes 24-48 hours to complete.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Are there any monthly fees or hidden costs?</h3>
+                <p class="text-gray-600">
+                  No, there are no monthly fees or hidden costs for the basic government phone service. 
+                  The service is completely free as long as you remain eligible. Some providers may offer 
+                  additional premium features for a fee, but these are optional.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What happens if I use all my monthly data?</h3>
+                <p class="text-gray-600">
+                  Most providers offer unlimited data with reduced speeds after reaching your monthly limit. 
+                  You'll still be able to make calls and send texts, but internet browsing may be slower. 
+                  Check with your specific provider for their data policies.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">How often do I need to recertify my eligibility?</h3>
+                <p class="text-gray-600">
+                  You must recertify your eligibility annually to continue receiving free phone service. 
+                  Your provider will notify you when it's time to recertify, and the process is typically 
+                  simple and can be completed online.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What happens if I don't use my phone for a while?</h3>
+                <p class="text-gray-600">
+                  Most providers require some usage activity to keep your service active. If you don't use your phone 
+                  for an extended period (typically 30-60 days), your service may be deactivated. Check with your 
+                  specific provider for their usage requirements.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I upgrade to a better phone later?</h3>
+                <p class="text-gray-600">
+                  Some providers offer phone upgrade options, though there may be fees associated with upgrades. 
+                  You can also purchase your own compatible phone and use it with your free service plan, as long 
+                  as it works with your provider's network.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What network coverage can I expect?</h3>
+                <p class="text-gray-600">
+                  Coverage depends on your provider and their network partners. Most government phone providers use 
+                  major carrier networks (like T-Mobile, AT&T, or Verizon) to provide nationwide coverage. 
+                  Check with your provider for specific coverage maps in your area.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I use my phone while traveling?</h3>
+                <p class="text-gray-600">
+                  Yes, you can use your government phone while traveling within the United States. Coverage depends on 
+                  your provider's network and roaming agreements. International roaming may not be available or may 
+                  incur additional charges.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Program Details Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-orange-600 text-white p-6 text-xl font-bold">
+              Program Details
+            </h2>
+            
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I receive both Lifeline and ACP benefits?</h3>
+                <p class="text-gray-600">
+                  Yes! You can combine both programs for maximum savings. Many providers offer bundled plans 
+                  that maximize your government assistance benefits. This can provide up to $39.25 in monthly 
+                  discounts when both programs are combined.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What's the difference between Lifeline and ACP?</h3>
+                <p class="text-gray-600">
+                  Lifeline provides a $9.25 monthly discount on phone service and includes a free smartphone. 
+                  ACP offers a $30 monthly discount primarily for internet service and includes a one-time 
+                  device discount. Both programs can be used together for enhanced benefits.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I switch providers after getting approved?</h3>
+                <p class="text-gray-600">
+                  Yes, you can transfer your benefits to a different provider, but there may be a waiting 
+                  period between transfers. Most providers allow transfers once every 30-60 days. Contact 
+                  your new provider to initiate the transfer process.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">Are these programs available nationwide?</h3>
+                <p class="text-gray-600">
+                  Yes, both Lifeline and ACP are available in all 50 states, Washington D.C., and U.S. territories. 
+                  Some states also offer additional programs to supplement federal benefits. Tribal communities 
+                  may have enhanced eligibility and benefits.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Technical Support Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-teal-600 text-white p-6 text-xl font-bold">
+              Technical Support & Troubleshooting
+            </h2>
+            
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if I have problems with my phone or service?</h3>
+                <p class="text-gray-600">
+                  Contact your provider's customer service for technical support. Most providers offer 
+                  24/7 customer support through phone, chat, or online portals. They can help with 
+                  service issues, phone problems, or account questions.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if I lose or damage my free phone?</h3>
+                <p class="text-gray-600">
+                  Contact your provider immediately if you lose or damage your phone. Some providers 
+                  offer replacement options, though there may be a fee for replacements. It's important 
+                  to report lost phones to prevent unauthorized use.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">How do I check my remaining data and minutes?</h3>
+                <p class="text-gray-600">
+                  Most providers offer multiple ways to check your usage: through their mobile app, 
+                  by calling a specific number, or by logging into your online account. Check with 
+                  your provider for the specific method they use.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I use my phone as a mobile hotspot?</h3>
+                <p class="text-gray-600">
+                  Hotspot capabilities vary by provider and plan. Some providers include hotspot 
+                  functionality with your data plan, while others may charge additional fees. 
+                  Check with your specific provider for their hotspot policies.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if I move to a different state?</h3>
+                <p class="text-gray-600">
+                  You can keep your government phone service when you move. You'll need to update your address with 
+                  your provider, and you may need to recertify if your move coincides with your annual recertification 
+                  date. Service should continue uninterrupted.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I add additional lines to my account?</h3>
+                <p class="text-gray-600">
+                  Government phone programs typically allow only one line per household. However, if you have eligible 
+                  family members at different addresses, they may qualify for their own separate benefits. Each 
+                  household can receive one benefit.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What types of phones are available?</h3>
+                <p class="text-gray-600">
+                  Most providers offer modern Android smartphones with features like cameras, internet browsing, 
+                  and app support. The specific phone model varies by provider and availability. Some providers 
+                  offer multiple phone options to choose from.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">Are there restrictions on how I can use my phone?</h3>
+                <p class="text-gray-600">
+                  Your free government phone can be used for all standard phone activities: calls, texts, internet 
+                  browsing, apps, and more. The only restrictions are related to illegal activities, which apply 
+                  to all phone services regardless of how you obtained the phone.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Questions Section -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h2 class="bg-indigo-600 text-white p-6 text-xl font-bold">
+              Additional Questions
+            </h2>
+            
+            <div class="space-y-4 p-6">
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">How do I know if a provider is legitimate?</h3>
+                <p class="text-gray-600">
+                  Legitimate providers are certified by the Universal Service Administrative Company (USAC) and listed 
+                  on the official Lifeline and ACP program websites. They never charge application fees and provide 
+                  clear information about their services. Always verify a provider's certification before applying.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What's the difference between Lifeline and state programs?</h3>
+                <p class="text-gray-600">
+                  Lifeline is a federal program available nationwide. Some states offer additional programs that 
+                  supplement federal benefits with extra discounts or enhanced services. You can often combine 
+                  federal and state benefits for maximum savings.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Can I use my government phone for business purposes?</h3>
+                <p class="text-gray-600">
+                  Yes, there are no restrictions on using your government phone for business purposes. You can use 
+                  it for work calls, business communications, and any other legitimate business activities just like 
+                  any other phone service.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">What if I'm homeless or don't have a permanent address?</h3>
+                <p class="text-gray-600">
+                  You can still qualify for government phone service even without a permanent address. Many providers 
+                  accept alternative address verification methods, and some programs have special provisions for 
+                  homeless individuals. Contact providers directly to discuss your situation.
+                </p>
+              </div>
+
+              <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-lg font-bold mb-2">Are there data speed limitations?</h3>
+                <p class="text-gray-600">
+                  Some providers may implement speed limitations after you've used a certain amount of high-speed data, 
+                  but basic functionality remains. Speeds are typically sufficient for web browsing, email, and 
+                  social media. Check with your provider for specific speed details.
+                </p>
+              </div>
+
+              <div class="pb-4">
+                <h3 class="text-lg font-bold mb-2">How do I file a complaint about my service?</h3>
+                <p class="text-gray-600">
+                  You can file complaints with your provider's customer service, the FCC, or the Universal Service 
+                  Administrative Company (USAC). The FCC has a consumer complaint process specifically for Lifeline 
+                  and ACP program issues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Support -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          Still Have Questions?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          If you couldn't find the answer you're looking for, our support team is here to help. 
+          Contact us for personalized assistance with your government phone application.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/apply" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+            Apply Now
+          </a>
+          <a href="/contact" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Related Resources
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <a href="/eligibility" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 text-center">
+            <div class="text-blue-600 text-3xl mb-4">✅</div>
+            <h3 class="text-lg font-bold mb-2">Check Eligibility</h3>
+            <p class="text-gray-600">
+              Use our quick eligibility checker to see if you qualify for free phone service.
+            </p>
+          </a>
+          <a href="/programs" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 text-center">
+            <div class="text-green-600 text-3xl mb-4">📋</div>
+            <h3 class="text-lg font-bold mb-2">Program Guide</h3>
+            <p class="text-gray-600">
+              Learn about Lifeline and ACP programs and their benefits.
+            </p>
+          </a>
+          <a href="/providers" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 text-center">
+            <div class="text-purple-600 text-3xl mb-4" aria-label="Phone icon">📱</div>
+            <h3 class="text-lg font-bold mb-2">Compare Providers</h3>
+            <p class="text-gray-600">
+              Find the best provider for your needs and location.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Internal Links -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Learn More About Government Phone Programs
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <a href="/lifeline-program" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
+            <h3 class="font-bold mb-2 text-blue-600">Lifeline Program</h3>
+            <p class="text-sm text-gray-600">Federal phone assistance program</p>
+          </a>
+          <a href="/acp-program" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
+            <h3 class="font-bold mb-2 text-green-600">ACP Program</h3>
+            <p class="text-sm text-gray-600">Affordable Connectivity Program</p>
+          </a>
+          <a href="/tribal-programs" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
+            <h3 class="font-bold mb-2 text-purple-600">Tribal Programs</h3>
+            <p class="text-sm text-gray-600">Enhanced benefits for tribal communities</p>
+          </a>
+          <a href="/state-programs" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
+            <h3 class="font-bold mb-2 text-orange-600">State Programs</h3>
+            <p class="text-sm text-gray-600">State-specific assistance programs</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout> 

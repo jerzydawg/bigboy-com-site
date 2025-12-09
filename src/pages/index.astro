@@ -1,12 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import HeroSelector from '../components/HeroSelector.astro';
-import HowItWorks from '../components/HowItWorks.astro';
 import { supabase } from '../lib/supabase';
 import { createCitySlug } from '../lib/slug-utils.js';
 import { getSiteConfig, getDesignDNA, getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
 import { generateCSSVariables, getGoogleFontsURL } from '../lib/design-dna';
-import { getContentVariations } from '../lib/city-content-variations';
 
 export const prerender = false;
 
@@ -18,8 +15,11 @@ const keyword = getKeyword();
 const domain = getDomain();
 const siteURL = getSiteURL();
 
-// Get content variations for this domain
-const content = getContentVariations(domain);
+// Smart keyword formatting - avoid "Get Your my gov phone" grammar issues
+const keywordLower = keyword.toLowerCase();
+const keywordDisplay = keywordLower.startsWith('my ') || keywordLower.startsWith('your ') || keywordLower.startsWith('a ') || keywordLower.startsWith('the ')
+  ? keyword
+  : `Your ${keyword}`;
 
 // Generate dynamic CSS and fonts
 const cssVariables = generateCSSVariables(designDNA);
@@ -68,223 +68,126 @@ const allStates = [
   { name: 'Wisconsin', abbr: 'WI' }, { name: 'Wyoming', abbr: 'WY' }, { name: 'District of Columbia', abbr: 'DC' }
 ];
 
-// SEO Meta Tags - Dynamic from site config
+// SEO Meta Tags
 const title = `${keyword} | ${siteName} - Free Phone & Service Programs 2025`;
 const description = `Get your ${keyword.toLowerCase()} today. Check eligibility in 2 minutes. No cost, no hidden fees. ${siteName} helps you access free phone programs.`;
 const canonical = `${siteURL}/`;
 ---
 
-<Layout title={title} description={description} canonical={canonical}>
-  <main class="min-h-screen">
-    <!-- Hero Section - Dynamic based on design style -->
-    <HeroSelector />
+<Layout 
+  title={title}
+  description={description}
+  canonical={canonical}
+  cssVariables={cssVariables}
+  fontsURL={fontsURL}
+>
+  <style>
+    .stats-counter {
+      animation: countUp 2s ease-out;
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+    }
+  </style>
 
-    <!-- How It Works -->
-    <HowItWorks />
-
-    <!-- Programs Overview -->
-    <section class="py-12 md:py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8 md:mb-12">
-          Free Government Phone Programs
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          <!-- Lifeline Program -->
-          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300">
-            <div class="text-4xl mb-4" style={`color: ${designDNA.colors.primary};`}>{content.icons.phone}</div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Lifeline {keyword}</h3>
-            <p class="text-gray-600 mb-4">
-              Federal phone assistance program for qualifying households. 
-              Receive monthly discounts on communication services.
-            </p>
-            <ul class="text-sm text-gray-600 mb-4 space-y-1">
-              <li>• Monthly service discount</li>
-              <li>• Available nationwide</li>
-              <li>• Income-based qualification</li>
-            </ul>
-            <a href="/lifeline-program" class="font-semibold hover:opacity-80" style={`color: ${designDNA.colors.primary};`}>
-              Learn More →
-            </a>
-          </div>
-
-          <!-- ACP Program -->
-          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300">
-            <div class="text-4xl mb-4" style={`color: ${designDNA.colors.accent};`}>{content.icons.money}</div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Affordable Connectivity Program</h3>
-            <p class="text-gray-600 mb-4">
-              Federal digital access initiative providing internet 
-              and device assistance to eligible households.
-            </p>
-            <ul class="text-sm text-gray-600 mb-4 space-y-1">
-              <li>• Free internet service</li>
-              <li>• One-time device discount</li>
-              <li>• Expanded eligibility criteria</li>
-            </ul>
-            <a href="/acp-program" class="font-semibold hover:opacity-80" style={`color: ${designDNA.colors.accent};`}>
-              Learn More →
-            </a>
-          </div>
-
-          <!-- Tribal Programs -->
-          <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300">
-            <div class="text-4xl mb-4" style={`color: ${designDNA.colors.secondary};`}>{content.icons.support}</div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Tribal Free Government Phone</h3>
-            <p class="text-gray-600 mb-4">
-              Specialized federal assistance for tribal communities with 
-              enhanced benefits and expanded qualification criteria.
-            </p>
-            <ul class="text-sm text-gray-600 mb-4 space-y-1">
-              <li>• Enhanced monthly discount</li>
-              <li>• Tribal land benefits</li>
-              <li>• Community-specific support</li>
-            </ul>
-            <a href="/tribal-programs" class="font-semibold hover:opacity-80" style={`color: ${designDNA.colors.secondary};`}>
-              Learn More →
-            </a>
-          </div>
+  <!-- Hero Section -->
+  <section class="py-20 px-4" style={`background: linear-gradient(135deg, ${designDNA.colors.primary}15, ${designDNA.colors.primary}05);`}>
+    <div class="container mx-auto text-center max-w-4xl">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        my gov phone - Get Yours Today
+      </h1>
+      <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Access your my gov phone through trusted free phone programs. Skip the monthly bills and credit checks. Over 2 million Americans already have their free smartphone with unlimited talk, text, and data through {siteName}.
+      </p>
+      
+      <!-- Stats Row -->
+      <div class="grid grid-cols-3 gap-6 md:gap-12 mb-10 max-w-2xl mx-auto">
+        <div class="stats-counter">
+          <div class="text-2xl md:text-3xl font-bold" style={`color: ${designDNA.colors.primary};`}>2M+</div>
+          <div class="text-sm md:text-base text-gray-600">Helped</div>
+        </div>
+        <div class="stats-counter">
+          <div class="text-2xl md:text-3xl font-bold" style={`color: ${designDNA.colors.primary};`}>$0</div>
+          <div class="text-sm md:text-base text-gray-600">Cost</div>
+        </div>
+        <div class="stats-counter">
+          <div class="text-2xl md:text-3xl font-bold" style={`color: ${designDNA.colors.primary};`}>2 Min</div>
+          <div class="text-sm md:text-base text-gray-600">Application</div>
         </div>
       </div>
-    </section>
 
-    <!-- Benefits Section - Dynamic content -->
-    <section class="py-12 md:py-16 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8 md:mb-12">
-          Why Choose {siteName}?
-        </h2>
-        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          <div class="text-center">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={`background-color: ${designDNA.colors.primary}20;`}>
-              <span class="text-2xl">{content.icons.money}</span>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">{content.featureTitles.noCost}</h3>
-            <p class="text-gray-600">{content.valueProps[0]}</p>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={`background-color: ${designDNA.colors.accent}20;`}>
-              <span class="text-2xl">{content.icons.phone}</span>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">{content.featureTitles.freePhone}</h3>
-            <p class="text-gray-600">Receive a modern smartphone device at no additional cost.</p>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={`background-color: ${designDNA.colors.secondary}20;`}>
-              <span class="text-2xl">🌐</span>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">{content.featureTitles.connectivity}</h3>
-            <p class="text-gray-600">Stay connected with unlimited talk, text, and data access.</p>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={`background-color: ${designDNA.colors.accent}20;`}>
-              <span class="text-2xl">{content.icons.speed}</span>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">{content.featureTitles.approval}</h3>
-            <p class="text-gray-600">Streamlined application process with immediate approval.</p>
-          </div>
-        </div>
+      <a href="/apply/" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg inline-block">
+        Check If You Qualify Now
+      </a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Get Your {keyword} in 3 Easy Steps</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Simple process to get your free phone and service activated today.</p>
       </div>
-    </section>
-
-    <!-- Browse by State Section -->
-    <section class="py-12 md:py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-8 md:mb-12">
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-            Browse by State
-          </h2>
-          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
-            Government phone programs are available in all 50 states. Find free phone service in your area.
-          </p>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="step-card text-center p-6 rounded-xl bg-gray-50 transition-all duration-300">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style={`background-color: ${designDNA.colors.primary};`}>1</div>
+          <h3 class="text-xl font-semibold mb-3">Check Eligibility</h3>
+          <p class="text-gray-600">Answer a few quick questions about your household income or participation in qualifying programs like SNAP or Medicaid.</p>
         </div>
         
-        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 mb-8">
-          {allStates.map((state) => (
-            <a 
-              href={`/${state.abbr.toLowerCase()}/`}
-              class="state-btn group flex flex-col items-center justify-center p-3 bg-white rounded-lg text-gray-900 transition-all duration-200 shadow-sm hover:shadow-md border border-gray-200"
-              title={`${keyword} in ${state.name}`}
-            >
-              <span class="font-bold text-lg group-hover:scale-110 transition-transform">{state.abbr}</span>
-            </a>
-          ))}
+        <div class="step-card text-center p-6 rounded-xl bg-gray-50 transition-all duration-300">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style={`background-color: ${designDNA.colors.primary};`}>2</div>
+          <h3 class="text-xl font-semibold mb-3">Quick Approval</h3>
+          <p class="text-gray-600">Get instant approval in most cases. We verify your information and connect you with the best provider in your area.</p>
         </div>
         
-        <div class="text-center">
-          <a href="/states/" class="inline-flex items-center px-6 py-3 text-white font-semibold rounded-lg transition-colors" style={`background-color: ${designDNA.colors.primary};`}>
-            View All States & Cities
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+        <div class="step-card text-center p-6 rounded-xl bg-gray-50 transition-all duration-300">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style={`background-color: ${designDNA.colors.primary};`}>3</div>
+          <h3 class="text-xl font-semibold mb-3">Get Your Phone</h3>
+          <p class="text-gray-600">Receive your free smartphone by mail within 5-10 business days, or pick one up at a local store near you.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Popular Cities Section -->
-    {popularCities.length > 0 && (
-      <section class="py-12 md:py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-8 md:mb-12">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-              Most Popular Cities
-            </h2>
-            <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
-              Residents in these cities are accessing {keyword.toLowerCase()} through {siteName}.
-            </p>
-          </div>
-          
-          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {popularCities.map((city) => (
-              <a 
-                href={`/${city.state_abbr.toLowerCase()}/${createCitySlug(city.name)}/`}
-                class="group block bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-200"
-                style={`--hover-border-color: ${designDNA.colors.primary};`}
-              >
-                <div class="flex items-center justify-between mb-2">
-                  <h3 class="font-semibold text-gray-900 group-hover:opacity-80 transition-colors truncate">
-                    {city.name}
-                  </h3>
-                  <span class="text-xs font-bold px-2 py-1 rounded" style={`background-color: ${designDNA.colors.primary}20; color: ${designDNA.colors.primary};`}>
-                    {city.state_abbr}
-                  </span>
-                </div>
-                <p class="text-sm text-gray-500">
-                  {city.population?.toLocaleString()} residents
-                </p>
-              </a>
-            ))}
-          </div>
-          
-          <div class="text-center mt-8">
-            <a href="/states/" class="font-semibold hover:opacity-80" style={`color: ${designDNA.colors.primary};`}>
-              Explore all cities →
-            </a>
-          </div>
+  <!-- Programs Overview -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Free Phone Programs Available</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Multiple federal programs ensure you can get your my gov phone regardless of your situation.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <h3 class="text-xl font-semibold mb-3" style={`color: ${designDNA.colors.primary};`}>Lifeline Program</h3>
+          <p class="text-gray-600 mb-4">The original government program providing discounted phone service since 1985. Get unlimited talk and text plus data allowance every month at zero cost to qualified households nationwide.</p>
+          <a href="/lifeline-program/" class="text-[var(--color-primary)] hover:underline font-medium">Learn About Lifeline →</a>
         </div>
-      </section>
-    )}
-
-    <!-- CTA Section - Dynamic color -->
-    <section class="text-white py-12 md:py-16" style={`background-color: ${designDNA.colors.primary};`}>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
-          Ready to Get Your {keyword}?
-        </h2>
-        <p class="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto opacity-90 px-4">
-          {content.footerTagline}. {content.heroSubtext}
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
-          <a href="/apply" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300">
-            {content.ctaButton}
-          </a>
-          <a href="/providers" class="bg-transparent border-2 border-white hover:bg-white text-white hover:text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300">
-            View Providers
-          </a>
-          <a href="/eligibility" class="bg-transparent border-2 border-white hover:bg-white text-white hover:text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300">
-            Check Eligibility
-          </a>
+        
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <h3 class="text-xl font-semibold mb-3" style={`color: ${designDNA.colors.primary};`}>ACP Program</h3>
+          <p class="text-gray-600 mb-4">Affordable Connectivity Program offers enhanced internet discounts and device subsidies. Perfect for families needing high-speed data for work, school, and staying connected with loved ones.</p>
+          <a href="/acp-program/" class="text-[var(--color-primary)] hover:underline font-medium">Explore ACP Benefits →</a>
+        </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <h3 class="text-xl font-semibold mb-3" style={`color: ${designDNA.colors.primary};`}>Tribal Programs</h3>
+          <p class="text-gray-600 mb-4">Enhanced federal support for Native American communities living on tribal lands. Receive additional monthly discounts and priority access to the latest smartphones and unlimited service plans.</p>
+          <a href="/tribal-programs/" class="text-[var(--color-primary)] hover:underline font-medium">View Tribal Options →</a>
         </div>
       </div>
-    </section>
-  </main>
-</Layout>
+    </div>
+  </section>
+
+  <!-- Qualification Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-

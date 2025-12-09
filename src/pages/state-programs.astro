@@ -1,174 +1,316 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+import { getSiteURL, getSiteName, getDomain } from '../lib/site-config';
 
-const siteName = getSiteName();
-const keyword = getKeyword();
-const domain = getDomain();
-const siteURL = getSiteURL();
+const SITE_URL = getSiteURL();
+const SITE_NAME = getSiteName();
+const DOMAIN = getDomain();
 
-const title = 'my gov phone - Get Your Free Phone Today | State Programs';
-const description = 'Find your state\'s free phone program with my gov phone. Get free smartphones, unlimited data, and service through government assistance programs in all 50 states.';
-const canonicalURL = new URL('/state-programs', siteURL).href;
+const title = `State Free Government Phone Programs 2025: Local Free Government Phone Benefits by State | ${DOMAIN}`;
+const description = "Explore state-specific federal communication assistance programs. Find local benefits, approved providers, and qualification requirements for your state.";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "State Phone & Internet Programs 2025: Find Your Local Benefits",
+  "description": "Discover state-specific phone and internet assistance programs. Find additional benefits beyond Lifeline and ACP in your state. Check eligibility, find providers, and maximize your savings. Updated for 2025.",
+  "author": {
+    "@type": "Organization",
+    "name": "Government Phone Service"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": DOMAIN,
+    "url": SITE_URL
+  },
+  "datePublished": "2025-01-08",
+  "dateModified": "2025-01-08",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/state-programs`
+  }
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are state phone and internet programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "State phone and internet programs are additional assistance programs offered by individual states to help residents access affordable phone and internet service. These programs can provide extra discounts, devices, or support beyond federal programs like Lifeline and ACP."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do all states have extra programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, not all states have additional programs, but many do. Popular state programs include California LifeLine, Texas Lifeline Discount, New York State Telephone Assistance Program, Florida Link-Up, and Ohio Lifeline Assistance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I combine state and federal benefits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most cases, yes. You can receive both state and federal discounts if you qualify for both programs. This can provide maximum savings on your phone and internet service."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I find my state's program?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To find your state's program, check your state's public utility commission website, contact local providers, or use our eligibility checker to see what programs you qualify for in your area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What additional benefits do state programs offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "State programs may offer additional discounts, free or discounted devices, installation assistance, or specialized support for residents who qualify. Benefits vary by state and program."
+      }
+    }
+  ]
+};
 ---
 
-<Layout 
-  title={title}
-  description={description}
-  canonicalURL={canonicalURL}
->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "my gov phone - Get Your Free Phone Today | State Programs",
-      "description": "Find your state's free phone program with my gov phone. Get free smartphones, unlimited data, and service through government assistance programs in all 50 states.",
-      "author": {
-        "@type": "Organization",
-        "name": "big boy"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "big boy"
-      },
-      "datePublished": "2025-12-09",
-      "dateModified": "2025-12-09"
-    }
-  </script>
+<Layout title={title} description={description}>
+  <!-- Structured Data for Article -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqData)} />
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Which states offer the best free phone programs?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "All 50 states participate in the federal Lifeline program, but some states like California, Texas, Florida, and New York have additional benefits and faster approval processes for free phone services."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long does it take to get approved in my state?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Most states process applications within 7-14 business days. Some states offer instant approval for qualifying government benefit recipients."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I keep my current phone number when switching states?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, you can port your existing phone number to your new free government phone service when you move to a different state."
-          }
-        }
-      ]
-    }
-  </script>
-
-  <nav class="bg-white border-b border-gray-200 mb-6" aria-label="Breadcrumb">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <ol class="flex items-center space-x-2 py-4 text-sm">
-        <li>
-          <a href="/" class="text-gray-500 hover:text-[var(--color-primary)]">Home</a>
-        </li>
-        <li>
-          <span class="text-gray-400">/</span>
-        </li>
-        <li class="text-gray-900 font-medium">State Programs</li>
+  <main class="prose lg:prose-xl mx-auto py-12 px-4">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-blue-600">Home</a></li>
+        <li class="text-gray-400">/</li>
+        <li class="text-gray-900">State Programs</li>
       </ol>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <header class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-gray-900 mb-4">
-        my gov phone - Get Your Free Phone Today
-      </h1>
-      <p class="text-xl text-gray-600 leading-relaxed">
-        Discover free phone programs available in your state and get connected today
+    <h1 class="text-4xl font-bold text-gray-900 mb-6">State Free Government Phone Programs 2025: Find Your Local Benefits</h1>
+    
+    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8">
+      <p class="text-blue-800 font-medium">
+        <strong>Pro Tip:</strong> Many states offer additional communication assistance programs beyond federal benefits. 
+        <a href="/apply" rel="noreferrer" class="text-blue-600 hover:underline">Verify your eligibility</a> to maximize your savings!
       </p>
-    </header>
+    </div>
 
-    <div class="prose max-w-none">
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
-          Find Free Phone Programs in Your State
-        </h2>
-        <p class="text-gray-700 leading-relaxed mb-4">
-          Every state offers free phone programs through the federal Lifeline service, but each location has unique benefits and application processes. When you search for my gov phone options in your area, you'll discover that some states provide additional perks like extra data, better phone models, or faster approval times. The key is knowing which providers operate in your state and what specific benefits they offer.
-        </p>
-        <p class="text-gray-700 leading-relaxed">
-          State regulations and partnerships with wireless carriers create different experiences for applicants. Some states have streamlined their processes to get you connected within days, while others may take longer but offer more comprehensive services. Understanding your state's specific program helps you choose the best option for your needs.
-        </p>
-      </section>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">What Are State Phone & Internet Programs?</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        In addition to federal programs like <a href="/lifeline-program" class="text-blue-600 hover:underline">Lifeline</a> and <a href="/acp-program" class="text-blue-600 hover:underline">ACP</a>, many states offer their own phone and internet assistance programs. These state-specific options can provide extra benefits or fill gaps not covered by national programs.
+      </p>
+      <p class="text-gray-700">
+        State programs may offer additional discounts, devices, or support for residents who qualify. Some states have partnerships with local providers or run their own initiatives to ensure everyone can stay connected.
+      </p>
+    </section>
 
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
-          How to Get Your Free Phone in Any State
-        </h2>
-        <div class="bg-gray-50 p-6 rounded-lg mb-4">
-          <ol class="list-decimal list-inside space-y-3 text-gray-700">
-            <li><strong>Check your state's participating providers</strong> - Each state has different wireless companies offering my gov phone services</li>
-            <li><strong>Verify your eligibility</strong> - Requirements stay consistent across states, but documentation may vary</li>
-            <li><strong>Choose your provider</strong> - Compare phone models, data allowances, and coverage in your area</li>
-            <li><strong>Complete the application</strong> - Most states offer online, phone, or in-person application options</li>
-            <li><strong>Submit required documents</strong> - Upload or mail proof of eligibility and identity</li>
-            <li><strong>Receive approval notification</strong> - Wait times vary by state, typically 7-14 business days</li>
-            <li><strong>Get your phone delivered</strong> - Most providers ship directly to your address within 5-10 business days</li>
-          </ol>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">How State Programs Work</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-green-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-green-800 mb-3">Additional Benefits</h3>
+          <ul class="space-y-2 text-green-700">
+            <li>• Extra monthly discounts beyond federal programs</li>
+            <li>• Free or discounted devices (phones, tablets, computers)</li>
+            <li>• Installation and setup assistance</li>
+            <li>• Specialized support for seniors and disabled residents</li>
+            <li>• Local provider partnerships and deals</li>
+          </ul>
         </div>
-        <p class="text-gray-700 leading-relaxed">
-          The team at big boy has helped thousands of people navigate these state-specific requirements. We recommend starting your application early in the month when processing times are typically faster, and always keep copies of your documentation for future reference.
-        </p>
-      </section>
-
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
-          What You Get with State Free Phone Programs
-        </h2>
-        <div class="grid md:grid-cols-2 gap-6 mb-4">
-          <div class="bg-white border border-gray-200 rounded-lg p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Free Smartphone</h3>
-            <ul class="space-y-2 text-gray-700 text-sm">
-              <li>• Android smartphones with touchscreens</li>
-              <li>• Camera and multimedia capabilities</li>
-              <li>• Wi-Fi connectivity</li>
-              <li>• Access to app stores</li>
-            </ul>
-          </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Monthly Service</h3>
-            <ul class="space-y-2 text-gray-700 text-sm">
-              <li>• Unlimited talk and text</li>
-              <li>• High-speed data allowance</li>
-              <li>• National coverage</li>
-              <li>• No activation fees or deposits</li>
-            </ul>
-          </div>
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <h3 class="text-xl font-medium text-blue-800 mb-3">Eligibility Requirements</h3>
+          <ul class="space-y-2 text-blue-700">
+            <li>• Often similar to federal program criteria</li>
+            <li>• Some states have additional qualification options</li>
+            <li>• May require state residency verification</li>
+            <li>• Can be combined with federal benefits</li>
+            <li>• Application process varies by state</li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
-          Popular States for Free Phone Programs
-        </h2>
-        <div class="grid md:grid-cols-3 gap-4 mb-4">
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-gray-900 mb-2">California</h3>
-            <p class="text-sm text-gray-700">Multiple providers, excellent coverage, fast approval process</p>
-          </div>
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-gray-900 mb-2">Texas</h3>
-            <p class="text-sm text-gray-700">Wide provider selection, rural coverage options, quick delivery</p>
-          </div>
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-gray-900 mb-2">Florida</h3>
-            <p class="text-sm text-gray-700">Senior-friendly programs, bilingual support, hurricane preparedness</p>
-          </div>
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-gray-900 mb-2">New York</h3>
-            <p class="text-sm text-gray-700">Urban coverage, multiple language options,
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Popular State Programs</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">California LifeLine</h3>
+          <p class="text-gray-600 mb-3">Additional discounts for California residents on phone and internet service.</p>
+          <a href="/ca" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Texas Lifeline Discount</h3>
+          <p class="text-gray-600 mb-3">State-specific phone assistance program for Texas residents.</p>
+          <a href="/tx" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">New York State Telephone Assistance Program</h3>
+          <p class="text-gray-600 mb-3">Comprehensive phone and internet assistance for NY residents.</p>
+          <a href="/ny" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Florida Link-Up</h3>
+          <p class="text-gray-600 mb-3">Installation assistance and discounts for Florida residents.</p>
+          <a href="/fl" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Ohio Lifeline Assistance</h3>
+          <p class="text-gray-600 mb-3">State-sponsored phone and internet assistance program.</p>
+          <a href="/oh" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Illinois Link-Up</h3>
+          <p class="text-gray-600 mb-3">Installation and connection assistance for Illinois residents.</p>
+          <a href="/il" class="text-blue-600 hover:underline text-sm">Learn more →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">How to Find Your State's Program</h2>
+      <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-8 rounded-lg mb-6">
+        <h3 class="text-xl font-medium mb-4">Step-by-Step Guide to Finding State Benefits</h3>
+        <ol class="list-decimal list-inside space-y-3 text-lg">
+          <li><strong>Check Federal Eligibility:</strong> <a href="/apply" rel="noreferrer" class="text-yellow-200 hover:underline">Verify your eligibility</a> for Lifeline and ACP first</li>
+          <li><strong>Research Your State:</strong> Visit your state's public utility commission website</li>
+          <li><strong>Contact Local Providers:</strong> <a href="/providers" class="text-yellow-200 hover:underline">Find providers</a> in your area for state program details</li>
+          <li><strong>Apply for Benefits:</strong> Complete applications for both federal and state programs</li>
+        </ol>
+      </div>
+      <p class="text-gray-700">
+        <strong>Remember:</strong> State programs can often be combined with federal benefits for maximum savings. Don't miss out on additional assistance available in your area!
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">State Program Benefits Comparison</h2>
+      <div>
+        <table class="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 p-3 text-left">State</th>
+              <th class="border border-gray-300 p-3 text-left">Program Name</th>
+              <th class="border border-gray-300 p-3 text-left">Additional Benefits</th>
+              <th class="border border-gray-300 p-3 text-left">Eligibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 p-3 font-medium">California</td>
+              <td class="border border-gray-300 p-3">California LifeLine</td>
+              <td class="border border-gray-300 p-3">Extra discounts, device assistance</td>
+              <td class="border border-gray-300 p-3">Similar to federal + state-specific</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-3 font-medium">Texas</td>
+              <td class="border border-gray-300 p-3">Texas Lifeline Discount</td>
+              <td class="border border-gray-300 p-3">Additional monthly savings</td>
+              <td class="border border-gray-300 p-3">Federal criteria + residency</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-3 font-medium">New York</td>
+              <td class="border border-gray-300 p-3">NY Telephone Assistance</td>
+              <td class="border border-gray-300 p-3">Comprehensive support, devices</td>
+              <td class="border border-gray-300 p-3">Broad eligibility criteria</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-300 p-3 font-medium">Florida</td>
+              <td class="border border-gray-300 p-3">Florida Link-Up</td>
+              <td class="border border-gray-300 p-3">Installation assistance</td>
+              <td class="border border-gray-300 p-3">Federal + state requirements</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-3 font-medium">Ohio</td>
+              <td class="border border-gray-300 p-3">Ohio Lifeline Assistance</td>
+              <td class="border border-gray-300 p-3">Additional discounts, support</td>
+              <td class="border border-gray-300 p-3">Standard federal criteria</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-6">
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Do all states have extra programs?</h3>
+          <p class="text-gray-700">No, not all states have additional programs, but many do. Popular state programs include California LifeLine, Texas Lifeline Discount, New York State Telephone Assistance Program, Florida Link-Up, and Ohio Lifeline Assistance. Check your state's public utility commission website for specific programs.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Can I combine state and federal benefits?</h3>
+          <p class="text-gray-700">In most cases, yes. You can receive both state and federal discounts if you qualify for both programs. This can provide maximum savings on your phone and internet service. Always check with your provider about combining benefits.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">How do I find my state's program?</h3>
+          <p class="text-gray-700">To find your state's program, check your state's public utility commission website, contact local providers, or use our <a href="/apply" rel="noreferrer" class="text-blue-600 hover:underline">eligibility checker</a> to see what programs you qualify for in your area.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">What additional benefits do state programs offer?</h3>
+          <p class="text-gray-700">State programs may offer additional discounts, free or discounted devices, installation assistance, or specialized support for residents who qualify. Benefits vary by state and program, so it's important to research what's available in your area.</p>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-6">
+          <h3 class="text-xl font-medium text-gray-800 mb-3">Do I need to apply separately for state programs?</h3>
+          <p class="text-gray-700">Yes, state programs typically require separate applications from federal programs. However, many states have streamlined processes that work with federal eligibility verification. Check with your state's program administrator for specific application requirements.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-lg mb-8">
+      <h2 class="text-2xl font-bold mb-4">Maximize Your Savings</h2>
+      <p class="text-lg mb-6">Don't miss out on additional benefits available in your state! Combine federal and state programs for maximum savings.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/apply" rel="noreferrer" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Check Your Eligibility
+        </a>
+        <a href="/providers" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 no-underline text-center">
+          Find Local Providers
+        </a>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Related Government Phone Programs</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/lifeline-program" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Lifeline Program</h3>
+          <p class="text-gray-600">Federal program providing free or discounted phone service to eligible households.</p>
+        </a>
+        <a href="/acp-program" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">ACP Program</h3>
+          <p class="text-gray-600">Affordable Connectivity Program for internet and phone service discounts.</p>
+        </a>
+        <a href="/tribal-programs" class="block p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">Tribal Programs</h3>
+          <p class="text-gray-600">Specialized programs for residents living on Tribal lands.</p>
+        </a>
+      </div>
+    </section>
+
+    <div class="bg-gray-50 p-6 rounded-lg">
+      <p class="text-gray-700">
+        <strong>Need help finding your state's program?</strong> Visit our <a href="/faq" class="text-blue-600 hover:underline">FAQ page</a> for more answers, or <a href="/contact" class="text-blue-600 hover:underline">contact us</a> for personalized assistance with state-specific programs. 
+        We're here to help you access all available benefits!
+      </p>
+    </div>
+  </main>
+</Layout>

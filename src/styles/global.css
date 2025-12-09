@@ -234,6 +234,26 @@ textarea:focus-visible {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-[#303F9F];
-} 
+}
 
- 
+/* Global Button Link Styles - Remove underlines from all button-styled links */
+a[class*="bg-"],
+a[class*="btn-"],
+a.no-underline,
+.cta-button {
+  text-decoration: none !important;
+}
+
+a[class*="bg-"]:hover,
+a[class*="btn-"]:hover,
+a.no-underline:hover,
+.cta-button:hover {
+  text-decoration: none !important;
+}
+
+/* Ensure rounded-lg buttons never have underlines */
+a[class*="rounded-lg"],
+a[class*="rounded-xl"],
+a[class*="rounded-2xl"] {
+  text-decoration: none !important;
+}

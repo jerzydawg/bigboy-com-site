@@ -28,8 +28,8 @@ export interface SiteConfig {
 // DO NOT MODIFY THIS SECTION MANUALLY - IT IS AUTO-GENERATED
 const SITE_CONFIG_DATA = {
   domain: "bigboy.com",
-  siteName: "big boy",
-  keyword: "my gov phone",
+  siteName: "Big Boy",
+  keyword: "My Gov Phone",
   ownerEmail: "bigboy@gmail.ocm",
   designStyle: "advanced" as DesignStyle,
   environment: "staging" as const,

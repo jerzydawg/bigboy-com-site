@@ -10,6 +10,7 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [tailwind()],
   site: process.env.SITE_URL || 'https://example.com',
+  trailingSlash: 'never',
   server: { port: 4321, host: true },
   build: { inlineStylesheets: 'auto' },
   vite: {

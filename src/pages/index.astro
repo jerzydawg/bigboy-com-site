@@ -83,12 +83,12 @@ const canonical = `${siteURL}/`;
     <HowItWorks />
 
     <!-- Programs Overview -->
-    <section class="py-16 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+    <section class="py-12 md:py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8 md:mb-12">
           Free Government Phone Programs
         </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           <!-- Lifeline Program -->
           <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300">
             <div class="text-4xl mb-4" style={`color: ${designDNA.colors.primary};`}>{content.icons.phone}</div>
@@ -147,12 +147,12 @@ const canonical = `${siteURL}/`;
     </section>
 
     <!-- Benefits Section - Dynamic content -->
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+    <section class="py-12 md:py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8 md:mb-12">
           Why Choose {siteName}?
         </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           <div class="text-center">
             <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={`background-color: ${designDNA.colors.primary}20;`}>
               <span class="text-2xl">{content.icons.money}</span>
@@ -186,18 +186,18 @@ const canonical = `${siteURL}/`;
     </section>
 
     <!-- Browse by State Section -->
-    <section class="py-16 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+    <section class="py-12 md:py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
             Browse by State
           </h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
+          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
             Government phone programs are available in all 50 states. Find free phone service in your area.
           </p>
         </div>
         
-        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-13 gap-2 mb-8">
+        <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 mb-8">
           {allStates.map((state) => (
             <a 
               href={`/${state.abbr.toLowerCase()}/`}
@@ -222,13 +222,13 @@ const canonical = `${siteURL}/`;
 
     <!-- Popular Cities Section -->
     {popularCities.length > 0 && (
-      <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <section class="py-12 md:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-8 md:mb-12">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
               Most Popular Cities
             </h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
+            <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Residents in these cities are accessing {keyword.toLowerCase()} through {siteName}.
             </p>
           </div>
@@ -265,15 +265,15 @@ const canonical = `${siteURL}/`;
     )}
 
     <!-- CTA Section - Dynamic color -->
-    <section class="text-white py-16" style={`background-color: ${designDNA.colors.primary};`}>
-      <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+    <section class="text-white py-12 md:py-16" style={`background-color: ${designDNA.colors.primary};`}>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
           Ready to Get Your {keyword}?
         </h2>
-        <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+        <p class="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto opacity-90 px-4">
           {content.footerTagline}. {content.heroSubtext}
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
           <a href="/apply" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300">
             {content.ctaButton}
           </a>

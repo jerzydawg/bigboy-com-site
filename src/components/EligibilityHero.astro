@@ -17,9 +17,9 @@ const secondPart = keywordParts.slice(Math.ceil(keywordParts.length / 2)).join('
 ---
 
 <section class="relative" style={`background: linear-gradient(135deg, ${designDNA.colors.primary} 0%, ${designDNA.colors.primaryDark || designDNA.colors.primary} 100%);`}>
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-32">
-    <!-- Single Responsive Hero Content - No Duplicates -->
-    <div class="text-center">
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
+    <!-- Hero Content -->
+    <div class="text-center max-w-4xl mx-auto">
       <!-- Single Responsive Urgency Badge -->
       <div class="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 bg-red-500/90 md:bg-red-500 backdrop-blur-sm md:backdrop-blur-none text-white text-xs md:text-sm font-semibold rounded-full shadow-lg mb-6 md:mb-8 animate-slide-up">
         <svg class="w-3.5 md:w-4 h-3.5 md:h-4 mr-1.5 md:mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -38,8 +38,8 @@ const secondPart = keywordParts.slice(Math.ceil(keywordParts.length / 2)).join('
         </span>
       </h1>
 
-      <!-- Single Responsive Social Proof Card - Dynamic content -->
-      <div class="bg-white/10 backdrop-blur-md md:backdrop-blur-sm rounded-2xl p-4 md:p-6 mb-6 md:mb-8 max-w-sm md:max-w-2xl mx-auto border border-white/20 shadow-xl animate-slide-up">
+      <!-- Social Proof Stats -->
+      <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 mb-6 md:mb-8 max-w-md md:max-w-2xl mx-auto border border-white/20 shadow-xl animate-slide-up">
         <div class="grid grid-cols-3 gap-2 md:gap-8 text-white">
           <div class="text-center">
             <div class="text-2xl md:text-2xl font-bold">{content.heroStats.stat1.value}</div>

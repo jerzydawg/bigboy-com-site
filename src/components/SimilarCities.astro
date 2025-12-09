@@ -1,0 +1,97 @@
+---
+export interface Props {
+  currentCityName: string;
+  currentStateAbbr: string;
+  currentPopulation?: number;
+  similarCities: Array<{
+    name: string;
+    state_abbr: string;
+    state_name: string;
+    population?: number;
+  }>;
+}
+
+const { currentCityName, currentStateAbbr, currentPopulation, similarCities } = Astro.props;
+
+// Import slug utility
+import { createCitySlug } from '../lib/slug-utils.js';
+
+// Filter to only show cities from different states, limit to 6
+const filteredCities = similarCities
+  .filter(city => city.state_abbr !== currentStateAbbr)
+  .slice(0, 6);
+
+// Don't render if no similar cities
+if (filteredCities.length === 0) {
+  return null;
+}
+---
+
+<section class="py-12 bg-gradient-to-b from-white to-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-[#22223B] mb-2">
+          Similar Cities in Other States
+        </h2>
+        <p class="text-[#6B7280]">
+          Explore free government phone programs in cities similar to {currentCityName}
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {filteredCities.map((city) => (
+          <a 
+            href={`/${city.state_abbr.toLowerCase()}/${createCitySlug(city.name)}/`}
+            class="group block p-6 bg-white rounded-xl hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-purple-400"
+            aria-label={`View free government phone programs in ${city.name}, ${city.state_abbr}`}
+          >
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="font-bold text-lg text-[#22223B] group-hover:text-purple-600 transition-colors">
+                  {city.name}
+                </h3>
+                <p class="text-sm text-[#6B7280]">{city.state_name}</p>
+              </div>
+              <span class="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+                {city.state_abbr}
+              </span>
+            </div>
+            
+            {city.population && (
+              <div class="flex items-center text-sm text-[#6B7280] mb-3">
+                <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                </svg>
+                {city.population.toLocaleString()} residents
+              </div>
+            )}
+            
+            <div class="flex items-center justify-between">
+              <p class="text-purple-600 text-sm font-medium group-hover:text-purple-700">
+                View Programs →
+              </p>
+              <svg class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <!-- View More States CTA -->
+      <div class="text-center">
+        <a 
+          href="/states/"
+          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all shadow-md hover:shadow-lg"
+        >
+          Explore All States
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+

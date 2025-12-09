@@ -1,0 +1,21 @@
+---
+/**
+ * Hero Selector Component
+ * Basic mode: Uses EligibilityHero (light, colorful background)
+ * Advanced mode: Uses HeroAdvanced (dark theme, completely different layout)
+ */
+import { getDesignDNA } from '../lib/site-config';
+
+// Import hero variants
+import EligibilityHero from './EligibilityHero.astro';
+import HeroAdvanced from './advanced/HeroAdvanced.astro';
+
+const designDNA = getDesignDNA();
+const isAdvanced = designDNA.designStyle === 'advanced';
+---
+
+{isAdvanced ? (
+  <HeroAdvanced />
+) : (
+  <EligibilityHero />
+)}

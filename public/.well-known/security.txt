@@ -1,0 +1,11 @@
+Contact: mailto:security@government-phone.co
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://government-phone.co/.well-known/security.txt
+
+# Security Policy
+# If you discover a security vulnerability, please email us at security@government-phone.co
+# We appreciate responsible disclosure and will work with you to address any issues.
+
+
+

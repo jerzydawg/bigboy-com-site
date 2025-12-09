@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const pageTitle = `${keyword} - ACP Free Internet & Phone | ${siteName}`;
+const pageDescription = "Get free internet and phone service through the ACP program. Qualify for up to $30/month discount plus free device. Apply today - no credit check required.";
+const canonicalURL = `${siteURL}/acp-program`;
+
+const jsonLD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": pageTitle,
+      "description": pageDescription,
+      "url": canonicalURL,
+      "datePublished": "2025-12-09",
+      "dateModified": "2025-12-09",
+      "author": {
+        "@type": "Organization",
+        "name": siteName
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": siteName,
+        "url": siteURL
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the ACP program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Affordable Connectivity Program (ACP) provides eligible households with discounts up to $30 per month toward internet service and up to $75 per month for households on qualifying Tribal lands."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get a free phone through ACP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, eligible households can receive a one-time discount of up to $100 to purchase a laptop, desktop computer, or tablet from participating providers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I apply for the ACP program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can apply online through the official ACP website, by mail, or through participating internet service providers. You'll need to provide documentation to verify your eligibility."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} canonical={canonicalURL} jsonLD={jsonLD}>
+  <!-- Breadcrumb Navigation -->
+  <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ol class="flex items-center space-x-2 text-sm">
+        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+        <li class="text-gray-500">/</li>
+        <li class="text-gray-700">ACP Program</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header Section -->
+    <header class="text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        my gov phone - ACP Free Internet & Phone
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Get connected with the Affordable Connectivity Program. Free internet service, free phones, and no credit checks required.
+      </p>
+    </header>
+
+    <!-- What Is ACP Section -->
+    <section class="mb-12">
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">What Is the ACP Program?</h2>
+        <p class="text-lg text-gray-700 mb-4">
+          The Affordable Connectivity Program helps millions of families get free internet and phone service every month. When you search for <strong style="color: var(--color-primary)">my gov phone</strong> options, ACP stands out as the largest federal program providing internet discounts to qualified households.
+        </p>
+        <p class="text-lg text-gray-700">
+          Unlike other programs, ACP covers both internet service and devices. You can get up to $30 off your monthly internet bill, plus a one-time discount up to $100 for a new phone, tablet, or computer. The program works with major carriers nationwide, making it easy to find service in your area.
+        </p>
+      </div>
+    </section>
+
+    <!-- What You Get Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">What You Get With ACP</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Free Internet Service</h3>
+          <p class="text-gray-700">Up to $30 monthly discount on internet service. Many households get completely free internet when combined with low-cost plans.</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-full mb-4 flex items-center justify-center" style="background-color: var(--color-primary)">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Device Discount</h3>
+          <p class="text-gray-700">Get up to $100 off a new phone, tablet, or computer. Many devices are completely free after the discount.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who Qualifies Section -->
+    <section class="mb-12">
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Who Qualifies for ACP?</h2>
+        <p class="text-lg text-gray-700 mb-6">
+          Checking <strong style="color: var(--color-primary)">my gov phone</strong> eligibility through {siteName} is simple. You qualify if your household income is at or below 200% of Federal Poverty Guidelines or if you participate in certain assistance programs.
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Income Guidelines</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-2 flex-shrink-0" style="color: var(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                1 person: $31,200 or less
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 mr-2 flex-shrink-0" style="color: var(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1

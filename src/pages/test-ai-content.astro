@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `State Free Government Phone Arizona Programs | ${siteName}`;
+const description = `Discover Arizona's state-specific free government phone programs. Learn about eligibility requirements, benefits, and how to apply for communication assistance in Arizona.`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "url": `${siteURL}/state-free-government-phone-arizona-programs`,
+  "datePublished": "2025-12-08",
+  "dateModified": "2025-12-08",
+  "author": {
+    "@type": "Organization",
+    "name": siteName
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": siteName,
+    "url": siteURL
+  }
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What state programs offer free phones in Arizona?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Arizona residents can access federal Lifeline and ACP programs through state-approved providers, plus additional state-specific assistance programs for low-income families."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do Arizona state programs differ from federal programs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Arizona state programs may offer additional benefits like enhanced data allowances, local support services, and streamlined application processes tailored to state residents."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I qualify for multiple assistance programs in Arizona?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Arizona residents may qualify for both federal and state assistance programs, potentially receiving enhanced benefits and services."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)}></script>
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Breadcrumb Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+      <div class="max-w-6xl mx-auto px-4 py-3">
+        <ol class="flex items-center space-x-2 text-sm text-gray-600">
+          <li><a href="/" class="hover:text-blue-600 transition-colors">Home</a></li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-gray-900 font-medium">State Programs</span>
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <!-- Header Section -->
+      <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">State Free Government Phone Arizona Programs</h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Explore Arizona's comprehensive state-specific communication assistance programs designed to connect residents with essential phone and internet services.
+        </p>
+      </header>
+
+      <!-- Introduction -->
+      <section class="mb-10">
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <p class="text-lg text-gray-700 leading-relaxed mb-4">
+            Arizona residents seeking reliable communication services can access multiple layers of assistance through state-coordinated programs. The <strong>Free Government Phone Arizona</strong> initiative combines federal funding with state-specific resources to ensure comprehensive coverage for qualifying households across all 15 counties.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            These programs recognize that Arizona's unique geographic challenges and diverse communities require tailored solutions beyond standard federal offerings. From urban Phoenix to rural Apache County, state programs bridge connectivity gaps through enhanced provider networks and specialized support services.
+          </p>
+        </div>
+      </section>
+
+      <!-- What Are State Programs -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Arizona State Communication Programs</h2>
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <p class="text-gray-700 leading-relaxed mb-4">
+            State programs in Arizona operate as enhanced versions of federal assistance, incorporating additional funding sources and local partnerships. The <strong>Free Government Phone Arizona</strong> state initiative works directly with approved telecommunications providers to offer expanded service areas, improved customer support, and additional device options.
+          </p>
+          <div class="grid md:grid-cols-2 gap-6 mt-6">
+            <div class="bg-blue-50 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-blue-800 mb-3">State Coordination</h3>
+              <p class="text-blue-700">Arizona Corporation Commission oversees provider compliance and service quality standards specific to state residents.</p>
+            </div>
+            <div class="bg-green-50 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-green-800 mb-3">Local Partnerships</h3>
+              <p class="text-green-700">Collaborations with community organizations, tribal authorities, and local governments enhance program accessibility.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Exclusive State Program Benefits</h2>
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Arizona's state programs provide enhanced benefits beyond federal minimums, ensuring residents receive comprehensive communication support. The <strong>Arizona Free Phones</strong> program delivers these additional advantages through state funding and provider partnerships.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-4">
+              <div class="bg-blue-100 p-2 rounded-full mt-1">
+                <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Enhanced Data Allowances</h3>
+                <p class="text-gray-600">State programs often provide additional monthly data beyond federal requirements, supporting modern communication needs.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-green-100 p-2 rounded-full mt-1">
+                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Bilingual Support Services</h3>
+                <p class="text-gray-600">Arizona programs include comprehensive Spanish-language support and resources for tribal communities.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-purple-100 p-2 rounded-full mt-1">
+                <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Local Application Centers</h3>
+                <p class="text-gray-600">Physical locations throughout Arizona provide in-person assistance with applications and device setup.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Apply -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">How to Apply for Arizona State Programs</h2>
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Applying for <strong>Free Government Phone Arizona</strong> state programs requires following specific steps designed to verify eligibility and ensure proper service activation. The streamlined process accommodates both online and in-person applications.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-4">
+              <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">1</div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Verify State Residency</h3>
+                <p class="text-gray-600">Confirm Arizona residency with acceptable documentation like utility bills, lease agreements, or state ID.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Complete Eligibility Assessment</h3>
+                <p class="text-gray-600">Demonstrate qualification through income documentation or participation in qualifying assistance programs.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">3</div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Select State-Approved Provider</h3>
+                <p class="text-gray-600">Choose from Arizona-certified providers offering enhanced state program benefits and local support.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">4</div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Activate Enhanced Services</h3>
+                <p class="text-gray-600">Receive device and activate service with state program benefits, including additional data and support features.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Popular States Comparison -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Arizona vs. Other State Programs</h2>
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <p class="text-gray-700 leading-relaxed mb-6">
+            <strong>Arizona Free Phones</strong> programs compare favorably with other states, offering unique advantages tailored to the Grand Canyon State's specific needs and demographics.
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="border border-gray-300 px-4 py-3 text-left font-semibold">State</th>
+                  <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Special Features</th>
+                  <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Coverage Areas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border border-gray-300 px-4 py-3 font-medium text-blue-600">Arizona</td>
+                  <td class="border border-gray-300 px-4 py-3">Tribal support, desert coverage, bilingual services</td>
+                  <td class="border border-gray-300 px-4 py-3">All 15 counties, tribal lands</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="border border-gray-300 px-4 py-3">California</td>
+                  <td class="border border-gray-300 px-4 py-3">Urban focus, tech integration</td>
+                  <td class="border border-gray-300 px-4 py-3">Major metropolitan areas</td>
+                </tr>
+                <tr>
+                  <td class="border border-gray-300 px-4 py-3">Texas</td>
+                  <td class="border border-gray-300 px-4 py-3">Rural expansion, border support</td>
+                  <td class="border border-gray-300 px-4 py-3">Statewide with rural priority</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        <div class="bg-white rounded-lg shadow

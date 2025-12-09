@@ -1,0 +1,172 @@
+---
+import { getSiteName, getKeyword, getDesignDNA, getDomain } from '../lib/site-config';
+import { getContentVariations, getTextVariation } from '../lib/city-content-variations';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const designDNA = getDesignDNA();
+const domain = getDomain();
+
+// Get content variations for this domain
+const content = getContentVariations(domain);
+
+// Split keyword into parts for styling (e.g., "Free Lifeline Phone Florida" -> "Free Lifeline" + "Phone Florida")
+const keywordParts = keyword.split(' ');
+const firstPart = keywordParts.slice(0, Math.ceil(keywordParts.length / 2)).join(' ');
+const secondPart = keywordParts.slice(Math.ceil(keywordParts.length / 2)).join(' ');
+---
+
+<section class="relative" style={`background: linear-gradient(135deg, ${designDNA.colors.primary} 0%, ${designDNA.colors.primaryDark || designDNA.colors.primary} 100%);`}>
+  <!-- Animated Background Elements removed -->
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-32">
+    <!-- Mobile-First Hero Content -->
+    <div class="text-center">
+      <!-- Mobile Urgency Badge with Animation -->
+      <div class="md:hidden mb-6 animate-slide-up">
+        <div class="inline-flex items-center px-3 py-1.5 bg-red-500/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full shadow-lg">
+          <svg class="w-3.5 h-3.5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+          </svg>
+          LIMITED TIME OFFER
+        </div>
+      </div>
+
+      <!-- Desktop Urgency Badge -->
+      <div class="hidden md:inline-flex items-center px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-full mb-8">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+        </svg>
+        LIMITED TIME: Offer expires soon
+      </div>
+
+      <!-- Mobile-Optimized Headline - Dynamic from site config -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight animate-fade-in">
+        <span class="block">{firstPart}</span>
+        <span class="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={`color: ${designDNA.colors.accent};`}>{secondPart}</span>
+        <span class="block text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal text-white mt-3 md:mt-4">
+          {siteName} - Get Yours Today
+        </span>
+      </h1>
+
+      <!-- Mobile Social Proof Card - Dynamic content -->
+      <div class="md:hidden bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-6 max-w-sm mx-auto border border-white/20 shadow-xl animate-slide-up">
+        <div class="grid grid-cols-3 gap-2">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-white">{content.heroStats.stat1.value}</div>
+            <div class="text-xs text-white/90">{content.heroStats.stat1.label}</div>
+          </div>
+          <div class="text-center border-x border-white/20">
+            <div class="text-2xl font-bold text-white">{content.heroStats.stat2.value}</div>
+            <div class="text-xs text-white/90">{content.heroStats.stat2.label}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-white">{content.heroStats.stat3.value}</div>
+            <div class="text-xs text-white/90">{content.heroStats.stat3.label}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Social Proof Bar - Dynamic content -->
+      <div class="hidden md:block bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 mb-8 max-w-2xl mx-auto">
+        <div class="grid grid-cols-3 gap-4 md:gap-8 text-white">
+          <div class="text-center">
+            <div class="text-xl md:text-2xl font-bold">{content.heroStats.stat1.value}</div>
+            <div class="text-xs md:text-sm text-white/90">{content.heroStats.stat1.label}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl md:text-2xl font-bold">{content.heroStats.stat2.value}</div>
+            <div class="text-xs md:text-sm text-white/90">{content.heroStats.stat2.label}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl md:text-2xl font-bold">{content.heroStats.stat3.value}</div>
+            <div class="text-xs md:text-sm text-white/90">{content.heroStats.stat3.label}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Value Proposition - Dynamic content -->
+      <p class="md:hidden text-base text-white mb-6 max-w-sm mx-auto">
+        <span class="font-semibold" style={`color: ${designDNA.colors.accent};`}>FREE</span> {content.heroTagline}
+      </p>
+
+      <!-- Desktop Value Proposition - Dynamic content -->
+      <p class="hidden md:block text-lg md:text-xl lg:text-2xl text-white mb-8 max-w-3xl mx-auto">
+        <span class="font-semibold" style={`color: ${designDNA.colors.accent};`}>FREE</span> {content.heroTagline} {content.heroSubtext}
+      </p>
+
+      <!-- Mobile Primary CTA Section -->
+      <div class="md:hidden space-y-4 mb-6">
+        <!-- Main CTA Button - Mobile Optimized - Dynamic content -->
+        <a href="/apply" rel="noreferrer" class="block w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold py-4 px-6 rounded-2xl shadow-2xl transform active:scale-95 transition-all duration-150">
+          <div class="flex items-center justify-center">
+            <span class="text-lg">{content.ctaButton}</span>
+          </div>
+        </a>
+        
+        <!-- Mobile Trust Indicators - Dynamic -->
+        <div class="flex items-center justify-center space-x-4 text-white/90 text-xs">
+          <div class="flex items-center">
+            {content.trustBadges[0]}
+          </div>
+          <div class="flex items-center">
+            {content.trustBadges[1]}
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Primary CTA - Dynamic content -->
+      <div class="hidden md:block space-y-4 mb-8">
+        <a href="/apply" rel="noreferrer" class="group relative block w-full max-w-md mx-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-bold py-4 md:py-6 px-6 md:px-8 rounded-2xl text-lg md:text-xl shadow-2xl transform hover:scale-105 transition-all duration-200 text-center">
+          <span class="relative z-10">{content.ctaButton.toUpperCase()}</span>
+          <div class="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+        </a>
+        
+        <!-- Desktop Trust Indicators - Dynamic -->
+        <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-white/90 text-sm">
+          <div class="flex items-center">
+            {content.trustBadges[0]}
+          </div>
+          <div class="flex items-center">
+            {content.trustBadges[1]}
+          </div>
+          <div class="flex items-center">
+            {content.trustBadges[2]}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Wave -->
+  <div class="md:hidden absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="white" fill-opacity="0.1"/>
+    </svg>
+  </div>
+
+  <!-- Floating elements removed -->
+</section>
+
+
+<style>
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+</style> 

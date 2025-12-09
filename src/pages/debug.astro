@@ -1,0 +1,31 @@
+---
+import { supabase } from '../lib/supabase';
+
+// Test basic database connection
+const { data: states, error } = await supabase
+  .from('states')
+  .select('*')
+  .limit(3);
+
+console.log('Debug page - states:', states);
+console.log('Debug page - error:', error);
+---
+
+<html>
+<head>
+  <title>Debug Page</title>
+</head>
+<body>
+  <h1>Debug Page</h1>
+  <p>SSR is working!</p>
+  <p>States count: {states?.length || 0}</p>
+  <p>Error: {error?.message || 'None'}</p>
+  
+  <h2>States:</h2>
+  <ul>
+    {states?.map(state => (
+      <li key={state.id}>{state.name} ({state.abbreviation})</li>
+    ))}
+  </ul>
+</body>
+</html> 

@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - All Free Phone Programs | ${siteName}`;
+const description = "Discover every free phone program available in 2025. Compare Lifeline, ACP, state programs, and special assistance to find your perfect my gov phone match.";
+const canonicalURL = new URL('/programs', siteURL).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": `${keyword} - All Free Phone Programs`,
+  "description": description,
+  "author": {
+    "@type": "Organization",
+    "name": siteName
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": siteName,
+    "url": siteURL
+  },
+  "datePublished": "2025-12-09",
+  "dateModified": "2025-12-09",
+  "url": canonicalURL
+};
+---
+
+<Layout title={title} description={description} canonical={canonicalURL}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <!-- Breadcrumb -->
+    <nav class="bg-white border-b border-gray-200 py-3">
+      <div class="max-w-6xl mx-auto px-4">
+        <ol class="flex items-center space-x-2 text-sm">
+          <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+          <li class="text-gray-400">/</li>
+          <li class="text-gray-600">All Free Phone Programs</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-12 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">my gov phone - All Free Phone Programs</h1>
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl">Find every available free phone program in one place. From federal assistance to state-specific options, discover which programs can get you connected without any cost.</p>
+        
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900">Quick Program Finder</h2>
+          </div>
+          <p class="text-gray-700 mb-4">Over 40 million Americans qualify for free phone service through various assistance programs. The key is knowing which programs exist and which one works best for your situation.</p>
+          <a href="/apply" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg inline-block">Check Your Eligibility Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Federal Programs -->
+    <section id="federal-programs" class="py-16 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Federal Free Phone Programs</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900">Lifeline Program</h3>
+            </div>
+            <p class="text-gray-700 mb-4">The original federal program providing free phone service since 1985. Offers either landline or wireless service with monthly discounts up to $9.25.</p>
+            <ul class="text-gray-600 space-y-2 mb-4">
+              <li>• Free phone or monthly service discount</li>
+              <li>• Available in all 50 states</li>
+              <li>• Income-based or program participation</li>
+              <li>• One benefit per household</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4" style="background-color: var(--color-primary)">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900">Affordable Connectivity Program (ACP)</h3>
+            </div>
+            <p class="text-gray-700 mb-4">Newer federal program offering broader benefits including internet discounts and device assistance for qualifying households.</p>
+            <ul class="text-gray-600 space-y-2 mb-4">
+              <li>• Up to $30/month internet discount</li>
+              <li>• Up to $75/month on tribal lands</li>
+              <li>• One-time $100 device discount</li>
+              <li>• Can combine with Lifeline</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- State Programs -->
+    <section id="state-programs" class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">State-Specific Free Phone Programs</h2>
+        
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8 mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Enhanced State Benefits</h3>
+          <p class="text-gray-700 mb-6">Many states offer additional benefits beyond federal programs. When you apply for your my gov phone through big boy, we automatically check for all available state programs in your area.</p>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 mb-2">California LifeLine</h4>
+              <p class="text-gray-600 text-sm">Additional state discounts on top of federal programs</p>
+            </div>
+            <div class="bg-white rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 mb-2">Texas Phone Assistance</h4>
+              <p class="text-gray-600 text-sm">State-funded programs for rural and low-income areas</p>
+            </div>
+            <div class="bg-white rounded-lg p-4">
+              <h4 class="font-sem

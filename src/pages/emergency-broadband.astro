@@ -1,0 +1,180 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - Free Internet Program | Emergency Broadband Benefits`;
+const description = `Learn how ${keyword} helps you get free internet through current programs. Find out about the EBB to ACP transition and discover available options for free broadband access.`;
+const canonical = `${siteURL}/emergency-broadband`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "author": {
+    "@type": "Organization",
+    "name": siteName
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": siteName
+  },
+  "datePublished": "2025-12-09",
+  "dateModified": "2025-12-09",
+  "url": canonical
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happened to the Emergency Broadband Benefit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Emergency Broadband Benefit ended in December 2021 and was replaced by the Affordable Connectivity Program, which offers similar benefits with different eligibility requirements."
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "Can I still get free internet in 2025?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, while the ACP has ended, many providers still offer free internet programs for qualifying households, including Lifeline and provider-specific programs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I apply for free internet benefits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can apply through participating internet providers or through the National Verifier system. Check with providers in your area for current programs and eligibility requirements."
+      }
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Breadcrumb -->
+    <nav class="text-sm mb-6" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2">
+        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+        <li class="text-gray-500">›</li>
+        <li class="text-gray-700">Emergency Broadband</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        {keyword} - Free Internet Program Guide
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Discover how to get free internet access through current programs and learn about the transition from Emergency Broadband Benefits to newer options.
+      </p>
+      <div class="mt-6">
+        <a href="/apply" 
+           class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg">
+          Get Free Internet Now
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="prose prose-lg max-w-none">
+      
+      <!-- Introduction -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Free Internet Programs</h2>
+        <div class="bg-blue-50 border-l-4 border-[var(--color-primary)] p-6 mb-6">
+          <p class="text-lg leading-relaxed">
+            Getting free internet service has become easier than ever with {keyword} helping families connect to affordable broadband options. While the original Emergency Broadband Benefit program has ended, several new programs have emerged to help qualifying households get connected without breaking the bank.
+          </p>
+        </div>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          The landscape of free internet programs has changed significantly over the past few years. Many families who relied on the Emergency Broadband Benefit are now wondering what options remain available for getting free or discounted internet service in their homes.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          Through {siteName}, you can explore multiple pathways to free internet access, including provider-specific programs, Lifeline benefits, and state-sponsored initiatives that continue to bridge the digital divide for low-income households.
+        </p>
+      </section>
+
+      <!-- What Was EBB -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">What Was the Emergency Broadband Benefit?</h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          The Emergency Broadband Benefit launched in May 2021 as a temporary program designed to help families and households struggling to afford internet service during the pandemic. This program provided up to $50 monthly discounts for broadband service and up to $75 for households on qualifying tribal lands.
+        </p>
+        <div class="bg-gray-50 rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">EBB Program Benefits Included:</h3>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <span class="text-[var(--color-primary)] mr-2">✓</span>
+              Monthly discount of up to $50 on broadband service
+            </li>
+            <li class="flex items-start">
+              <span class="text-[var(--color-primary)] mr-2">✓</span>
+              One-time discount of up to $100 for a tablet, laptop, or desktop computer
+            </li>
+            <li class="flex items-start">
+              <span class="text-[var(--color-primary)] mr-2">✓</span>
+              Access to free or low-cost devices from participating providers
+            </li>
+          </ul>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          The program served millions of households nationwide before transitioning to the Affordable Connectivity Program, which offered similar benefits with updated eligibility requirements and funding structure.
+        </p>
+      </section>
+
+      <!-- Transition to ACP -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">The EBB to ACP Transition</h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          In December 2021, the Emergency Broadband Benefit transitioned to the Affordable Connectivity Program (ACP), which continued providing internet discounts until funding ran out in 2024. During this transition, {keyword} helped thousands of families understand their new options and maintain their internet connections.
+        </p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-red-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">EBB Program (Ended)</h3>
+            <ul class="space-y-2 text-sm text-gray-700">
+              <li>• Temporary pandemic relief program</li>
+              <li>• Up to $50 monthly discount</li>
+              <li>• Device discount available</li>
+              <li>• Ended December 2021</li>
+            </ul>
+          </div>
+          <div class="bg-green-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">ACP Program (Also Ended)</h3>
+            <ul class="space-y-2 text-sm text-gray-700">
+              <li>• Replaced EBB in December 2021</li>
+              <li>• Up to $30 monthly discount</li>
+              <li>• Broader eligibility criteria</li>
+              <li>• Funding ended in 2024</li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          While both federal programs have ended, many internet providers have stepped up to offer their own free and low-cost internet programs to help families stay connected. These provider-specific programs often have different eligibility requirements and benefits.
+        </p>
+      </section>
+
+      <!-- Current Options -->
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Current Free Internet Options</h2>
+        <p class="text-gray-700 leading-relaxed mb-6">
+          Even without federal broadband programs, families can still access free internet through multiple channels. {keyword} connects you with these ongoing programs that continue to serve qualifying households across the country.
+        </p>
+        
+        <div class="space-y-6">
+          <div class="border-2

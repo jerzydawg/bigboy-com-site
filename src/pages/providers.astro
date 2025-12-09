@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - Top Free Phone Providers | ${siteName}`;
+const description = "Discover the best free phone providers for government assistance programs. Compare top companies offering free phones and service through Lifeline and ACP programs.";
+const canonicalURL = `${siteURL}/providers`;
+---
+
+<Layout title={title} description={description} canonicalURL={canonicalURL}>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "my gov phone - Top Free Phone Providers",
+      "description": "Discover the best free phone providers for government assistance programs. Compare top companies offering free phones and service through Lifeline and ACP programs.",
+      "author": {
+        "@type": "Organization",
+        "name": "big boy"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "big boy",
+        "url": "https://bigboy.com"
+      },
+      "datePublished": "2025-12-09",
+      "dateModified": "2025-12-09",
+      "url": "https://bigboy.com/providers",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://bigboy.com/providers"
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which provider offers the best free phones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SafeLink Wireless, Assurance Wireless, and Q Link Wireless are among the top providers offering modern smartphones with generous data plans through government programs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I switch between free phone providers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can transfer your service between Lifeline providers once per year without penalty, allowing you to find the best fit for your needs."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <nav class="bg-gray-50 py-3 px-4">
+    <div class="max-w-4xl mx-auto">
+      <ol class="flex items-center space-x-2 text-sm">
+        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+        <li class="text-gray-500">/</li>
+        <li class="text-gray-700 font-medium">Providers</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{keyword} - Top Free Phone Providers</h1>
+      <p class="text-lg text-gray-600">Compare the best companies offering free phones and wireless service through government assistance programs.</p>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <p class="text-lg leading-relaxed mb-6">Getting your <span style="color: var(--color-primary)">my gov phone</span> starts with choosing the right provider. Multiple wireless companies participate in federal programs, each offering different phone models, data plans, and coverage areas. Understanding your options helps you pick the provider that delivers the best free service for your location and usage needs.</p>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Leading Free Phone Companies</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">SafeLink Wireless</h3>
+            <ul class="space-y-2 text-gray-600">
+              <li>• Android smartphones with 4G LTE</li>
+              <li>• Unlimited talk and text</li>
+              <li>• 4.5GB monthly data allowance</li>
+              <li>• Nationwide coverage through Verizon</li>
+            </ul>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Assurance Wireless</h3>
+            <ul class="space-y-2 text-gray-600">
+              <li>• Free Android phones available</li>
+              <li>• Unlimited calling nationwide</li>
+              <li>• Unlimited texting included</li>
+              <li>• 3GB high-speed data monthly</li>
+            </ul>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Q Link Wireless</h3>
+            <ul class="space-y-2 text-gray-600">
+              <li>• Modern smartphone selection</li>
+              <li>• Unlimited voice minutes</li>
+              <li>• Free unlimited texting</li>
+              <li>• Up to 5GB data per month</li>
+            </ul>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">TruConnect</h3>
+            <ul class="space-y-2 text-gray-600">
+              <li>• Latest Android models</li>
+              <li>• Unlimited domestic calls</li>
+              <li>• No limits on text messages</li>
+              <li>• 8GB monthly data benefit</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">How to Choose Your Provider</h2>
+        <p class="mb-4">When selecting a company for your <span style="color: var(--color-primary)">my gov phone</span> service, consider several important factors. Coverage quality matters most - check which networks provide the strongest signal in your area using online coverage maps.</p>
+        
+        <div class="bg-gray-50 rounded-lg p-6 mb-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Key Selection Criteria</h3>
+          <ul class="space-y-3 text-gray-700">
+            <li><strong>Network Coverage:</strong> Verify strong signal strength at home, work, and frequently visited locations</li>
+            <li><strong>Phone Options:</strong> Look for current Android models with features you need</li>
+            <li><strong>Data Allowance:</strong> Choose providers offering adequate monthly data for your usage</li>
+            <li><strong>Customer Support:</strong> Check availability of phone, chat, and in-person assistance</li>
+            <li><strong>Additional Benefits:</strong> Some providers include international calling or hotspot features</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Provider Comparison Tips</h2>
+        <p class="mb-4">The <span class="font-semibold">big boy</span> team recommends comparing actual service quality rather than just advertised features. Ask neighbors and friends about their experiences with different providers in your neighborhood. Network performance varies significantly by location, so local feedback proves more valuable than national ratings.</p>
+        
+        <p class="mb-6">Many people successfully use their <span style="color: var(--color-primary)">my gov phone</span> for everything from video calls to streaming music. Data speeds and monthly allowances have improved dramatically, making these free services competitive with paid plans. You can switch providers once yearly if your current company doesn't meet expectations.</p>
+        
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+          <p class="text-blue-800"><strong>Pro Tip:</strong> Most providers allow you to keep your existing phone number when switching, making it easy to try different companies until you find the best fit.</p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        
+        <div class="space-y-6">
+          <div class="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Which provider offers the best free phones?</h3>
+            <p class="text-gray-600">SafeLink Wireless, Assurance Wireless, and Q Link Wireless are among the top providers offering modern smartphones with generous data plans through government programs.</p>
+          </div>
+          
+          <div class="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Can I switch between free phone providers?</h3>
+            <p class="text-gray-

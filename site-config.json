@@ -1,0 +1,29 @@
+{
+  "domain": "bigboy.com",
+  "siteName": "big boy",
+  "keyword": "my gov phone",
+  "ownerEmail": "bigboy@gmail.ocm",
+  "designStyle": "advanced",
+  "designDNA": {
+    "colors": {
+      "primary": "#7C3AED",
+      "secondary": "#EC4899",
+      "background": "#0F0F23",
+      "text": "#FFFFFF",
+      "accent": "#06B6D4"
+    },
+    "typography": {
+      "heading": "Switzer",
+      "body": "Outfit",
+      "scale": 1.25
+    },
+    "shape": {
+      "buttonStyle": "square",
+      "cardStyle": "flat",
+      "borderRadius": 4
+    }
+  },
+  "environment": "staging",
+  "createdAt": "2025-12-09T00:12:19.565Z",
+  "version": "1.0.0"
+}

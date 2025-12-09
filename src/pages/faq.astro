@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - Common Questions Answered | ${siteName}`;
+const description = `Get answers to the most common questions about ${keyword} programs. Learn about eligibility, applications, and free phone services available in 2025.`;
+const canonicalURL = `${siteURL}/faq`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": title,
+      "description": description,
+      "url": canonicalURL,
+      "datePublished": "2025-12-09",
+      "dateModified": "2025-12-09",
+      "author": {
+        "@type": "Organization",
+        "name": siteName
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": siteName
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalURL
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Who qualifies for a free government phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You qualify for a free government phone if you receive Medicaid, SNAP, SSI, Federal Public Housing, or have a household income at or below 135% of Federal Poverty Guidelines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I apply for a free phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Apply online through approved providers, visit local offices, or call the National Verifier. You'll need proof of income or benefit participation and a valid ID."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's included with my free phone service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Free phone service typically includes unlimited talk and text, data allowance (varies by provider), voicemail, caller ID, and call waiting at no monthly cost."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description} canonicalURL={canonicalURL}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <!-- Breadcrumb -->
+    <nav class="bg-white shadow-sm border-b">
+      <div class="max-w-6xl mx-auto px-4 py-3">
+        <ol class="flex items-center space-x-2 text-sm">
+          <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+          <li class="text-gray-500">/</li>
+          <li class="text-gray-700 font-medium">FAQ</li>
+        </ol>
+      </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <!-- Header Section -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          {keyword} - Common Questions Answered
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Get instant answers to the most frequently asked questions about free government phone programs and find out how to get your free phone today.
+        </p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-8">
+          
+          <!-- Intro Section -->
+          <section class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Everything You Need to Know</h2>
+            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+              Thousands of Americans ask questions about <strong style="color: var(--color-primary)">{keyword}</strong> programs every day. Whether you're wondering about eligibility, the application process, or what services you'll receive, we've compiled the most common questions and clear answers to help you get your free phone quickly.
+            </p>
+            <p class="text-gray-700 text-lg leading-relaxed">
+              The {siteName} team has helped countless people understand these programs and successfully apply for their free phone service. Read through these frequently asked questions to find the information you need, then take the next step toward getting connected.
+            </p>
+          </section>
+
+          <!-- Eligibility FAQs -->
+          <section id="eligibility-faqs" class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <div class="w-10 h-10 rounded-full mr-4 flex items-center justify-center" style="background-color: var(--color-primary)">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              Eligibility Questions
+            </h2>
+            
+            <div class="space-y-6">
+              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Who qualifies for a free government phone?</h3>
+                <p class="text-gray-700 mb-3">You qualify if you receive any of these benefits:</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                  <li>Medicaid</li>
+                  <li>SNAP (Food Stamps)</li>
+                  <li>Supplemental Security Income (SSI)</li>
+                  <li>Federal Public Housing Assistance</li>
+                  <li>Veterans Pension or Survivors Pension</li>
+                </ul>
+                <p class="text-gray-700 mt-3">Or if your household income is at or below 135% of Federal Poverty Guidelines.</p>
+              </div>
+
+              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Do I need good credit to get a free phone?</h3>
+                <p class="text-gray-700">No credit check required! Your <strong style="color: var(--color-primary)">{keyword}</strong> approval is based solely on income or benefit eligibility, not your credit score or payment history.</p>
+              </div>
+
+              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Can I get a free phone if I'm already on someone else's plan?</h3>
+                <p class="text-gray-700">Yes, you can still qualify for your own free government phone even if you're currently on a family plan or sharing someone else's service.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Application FAQs -->
+          <section id="application-faqs" class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <div class="w-10 h-10 rounded-full mr-4 flex items-center justify-center" style="background-color: var(--color-primary)">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+              </div>
+              Application Process
+            </h2>
+            
+            <div class="space-y-6">
+              <div class="border-l-4 pl-6" style="border-color: var(--color-primary)">
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">How do I apply for a free phone?</h3>
+                <p class="text-gray-700 mb-3">Three easy ways to apply:</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-1 ml-4">

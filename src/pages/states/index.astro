@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - Find State Programs Near You | ${siteName}`;
+const description = 'Find my gov phone programs available in your state. Get free phones and monthly service through government assistance programs across all 50 states.';
+
+const states = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
+  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
+  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
+  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Find my gov phone Programs by State",
+      "description": "Complete guide to finding government phone assistance programs in every state across America.",
+      "author": {
+        "@type": "Organization",
+        "name": "big boy"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "big boy",
+        "url": "https://bigboy.com"
+      },
+      "datePublished": "2025-12-09",
+      "dateModified": "2025-12-09",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://bigboy.com/states/"
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do all states offer government phone programs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all 50 states participate in the federal Lifeline program, though some states may have additional programs or specific carriers available."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find programs in my specific state?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Click on your state from our directory above to see available carriers, application processes, and specific requirements for your area."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <nav class="bg-gray-50 py-3">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center space-x-2 text-sm">
+        <a href="/" class="text-[var(--color-primary)] hover:underline">Home</a>
+        <span class="text-gray-500">/</span>
+        <span class="text-gray-700">States</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          my gov phone Programs by State
+        </h1>
+        <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+          Every state offers free government phone programs. Find yours and get connected with a free smartphone and monthly service.
+        </p>
+        <a href="/apply" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg inline-block">
+          Check Your Eligibility Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-4">Select Your State</h2>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        Click on your state below to find specific program information, available carriers, and local application details.
+      </p>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {states.map((state) => (
+          <a 
+            href={`/states/${state.toLowerCase().replace(' ', '-')}`}
+            class="p-4 bg-gray-50 hover:bg-[var(--color-primary)] hover:text-white rounded-lg text-center font-medium transition-all duration-200 border border-gray-200 hover:border-[var(--color-primary)] group"
+          >
+            <div class="text-sm md:text-base">{state}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">How State Programs Work</h2>
+      
+      <div class="prose max-w-none">
+        <p class="text-lg leading-relaxed mb-6">
+          Getting your <strong>my gov phone</strong> through state programs is straightforward because all states participate in the federal Lifeline program. However, each state may have different carriers, application processes, and additional benefits available to residents.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-6">
+          When you explore programs through <strong>{siteName}</strong>, you'll discover that some states offer enhanced benefits beyond the basic federal program. These might include additional data allowances, better phone models, or streamlined application processes that get you connected faster.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-6">
+          The beauty of the <strong>my gov phone</strong> program is its nationwide availability. Whether you live in a major metropolitan area or a rural community, you can access free phone service. Rural states often have special provisions to ensure coverage reaches everyone who qualifies.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-6">
+          Your state determines which wireless carriers participate locally. Some states have multiple carrier options, giving you choices for coverage areas and phone models. Popular carriers include SafeLink, Assurance Wireless, and TruConnect, though availability varies by location.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-6">
+          Application requirements stay consistent across states, but the actual application process can differ. Some states allow online applications only, while others accept applications by phone or mail. <strong>{siteName}</strong> helps you navigate these state-specific processes to get your free phone quickly.
+        </p>
+
+        <p class="text-lg leading-relaxed">
+          Remember that your <strong>my gov phone</strong> benefits travel with you if you move between states. The program recognizes your eligibility nationwide, though you may need to update your address and potentially switch carriers based on your new location's available providers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      
+      <div class="space-y-8">
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h3 class="text-xl font-semibold mb-3" style="color: var(--color-primary)">Do all states offer government phone programs?</h3>
+          <p class="text-gray-700">Yes, all 50 states participate in the federal Lifeline program, though some states may have additional programs or specific carriers available. Every state ensures eligible residents can get free phone service.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h3 class="text-xl font-semibold mb-3" style="color: var(--color-primary)">How do I find programs in my specific state?</h3>
+          <p class="text-gray-700">Click on your state from our directory above to see available carriers, application processes, and specific requirements for your area. Each state page provides detailed local information.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h3 class="text-xl font-semibold mb-3" style="color: var(--color-primary)">Can I switch carriers if I move to a different state?</h3>
+          <p class="text-gray-700">Yes, your eligibility transfers nationwide. When you move, you can update your address and switch to a carrier available in your new state while maintaining your benefits.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h

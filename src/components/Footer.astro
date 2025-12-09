@@ -1,0 +1,96 @@
+---
+import { getSiteName, getKeyword, getDomain, getSiteURL, getDesignDNA } from '../lib/site-config';
+import { getContentVariations } from '../lib/city-content-variations';
+
+// Get dynamic site configuration
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+const designDNA = getDesignDNA();
+
+// Get content variations for this domain
+const content = getContentVariations(domain);
+---
+
+<footer class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+  <!-- Mobile Footer -->
+  <div class="md:hidden">
+    <!-- Mobile Hero CTA -->
+    <div class="px-6 py-8 relative overflow-hidden" style={`background: linear-gradient(90deg, ${designDNA.colors.primary} 0%, ${designDNA.colors.secondary} 100%);`}>
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative z-10">
+        <div class="text-center mb-4">
+          <h3 class="text-2xl font-bold mb-2 text-white">Get Your {keyword} Today!</h3>
+          <p class="text-white/90 text-sm leading-relaxed">
+            {content.footerTagline}
+          </p>
+        </div>
+        
+        <!-- Primary CTA -->
+        <a href="/apply" rel="noreferrer" class="block w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-slate-900 font-bold py-4 px-6 rounded-xl shadow-xl text-center transform hover:scale-105 transition-all duration-200">
+          <span class="block text-lg">{content.ctaButton.toUpperCase()}</span>
+        </a>
+        
+        <!-- Trust Indicators -->
+        <div class="flex items-center justify-center space-x-6 mt-4 text-xs text-white/80">
+          <span>{content.trustBadges[0]}</span>
+          <span>•</span>
+          <span>{content.trustBadges[1]}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright Only -->
+    <div class="px-6 py-4 text-center">
+      <p class="text-xs text-slate-400">
+        © 2025 {domain}. All rights reserved.
+      </p>
+    </div>
+  </div>
+
+  <!-- Desktop Footer -->
+  <div class="hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Hero CTA Section -->
+      <div class="rounded-2xl p-8 mb-10 relative overflow-hidden" style={`background: linear-gradient(90deg, ${designDNA.colors.primary} 0%, ${designDNA.colors.secondary} 100%);`}>
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 class="text-3xl font-bold mb-4 text-white">
+                Get Your {keyword}
+              </h2>
+              <p class="text-white/90 text-lg mb-4">
+                {content.footerTagline}
+              </p>
+            </div>
+            
+            <div class="text-center">
+              <a href="/apply" rel="noreferrer" class="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-slate-900 font-bold py-4 px-8 rounded-xl shadow-xl transform hover:scale-105 transition-all duration-200">
+                <span class="text-xl">{content.ctaButton.toUpperCase()}</span>
+              </a>
+              
+              <div class="flex items-center justify-center space-x-6 mt-4 text-sm text-white/80">
+                <span>{content.trustBadges[0]}</span>
+                <span>•</span>
+                <span>{content.trustBadges[1]}</span>
+                <span>•</span>
+                <span>{content.trustBadges[2]}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer - Copyright Only -->
+      <div class="border-t border-slate-700 pt-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-slate-400 text-sm">
+            © 2025 {domain}. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,238 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+import { createCitySlug } from '../../lib/slug-utils.js';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getSiteURL } from '../../lib/site-config';
+
+const SITE_URL = getSiteURL();
+
+// Get state from URL params
+const { state } = Astro.params;
+const stateUpper = state?.toUpperCase();
+
+// Validate required params
+if (!state) {
+  return Astro.redirect('/404');
+}
+
+// Initialize variables
+let stateData: any = null;
+let cities: Array<{name: string; population: number; id: number}> = [];
+let totalCities = 0;
+
+// Fetch state and all cities
+if (supabase) {
+  try {
+    // Get state data
+    const { data: stateResult } = await supabase
+      .from('states')
+      .select('*')
+      .eq('abbreviation', stateUpper)
+      .maybeSingle();
+    
+    stateData = stateResult;
+    
+    if (stateData) {
+      // Get ALL cities for this state with pagination (Supabase has 1000 row limit)
+      let allCities: Array<{name: string; population: number; id: number}> = [];
+      let offset = 0;
+      const batchSize = 1000;
+      let hasMore = true;
+      
+      while (hasMore) {
+        const { data: citiesData, count } = await supabase
+          .from('cities')
+          .select('id, name, population', { count: 'exact' })
+          .eq('state_id', stateData.id)
+          .order('name', { ascending: true })
+          .range(offset, offset + batchSize - 1);
+        
+        if (citiesData && citiesData.length > 0) {
+          allCities = [...allCities, ...citiesData];
+          offset += batchSize;
+          totalCities = count || allCities.length;
+          hasMore = citiesData.length === batchSize;
+        } else {
+          hasMore = false;
+        }
+      }
+      
+      cities = allCities;
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+// If no state data found, redirect to 404
+if (!stateData) {
+  return Astro.redirect('/404');
+}
+
+const title = `All Cities in ${stateData.name} | Free Government Phone Programs`;
+const description = `Browse all ${totalCities.toLocaleString()} cities in ${stateData.name} with free government phone programs. Find Lifeline and ACP coverage in your city.`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `All Cities in ${stateData.name} with Free Government Phone`,
+  "description": description,
+  "url": `${SITE_URL}/${stateData.abbreviation.toLowerCase()}/all/`,
+  "numberOfItems": totalCities,
+  "isPartOf": {
+    "@type": "WebPage",
+    "name": `${stateData.name} Government Phone Programs`,
+    "url": `${SITE_URL}/${stateData.abbreviation.toLowerCase()}/`
+  }
+};
+
+const breadcrumbData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": `${SITE_URL}/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": stateData.name,
+      "item": `${SITE_URL}/${stateData.abbreviation.toLowerCase()}/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "All Cities",
+      "item": `${SITE_URL}/${stateData.abbreviation.toLowerCase()}/all/`
+    }
+  ]
+};
+
+// Group cities alphabetically
+const citiesByLetter: Record<string, typeof cities> = {};
+cities.forEach(city => {
+  const firstLetter = city.name.charAt(0).toUpperCase();
+  if (!citiesByLetter[firstLetter]) {
+    citiesByLetter[firstLetter] = [];
+  }
+  citiesByLetter[firstLetter].push(city);
+});
+
+const alphabet = Object.keys(citiesByLetter).sort();
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbData)} />
+  
+  <main class="min-h-screen bg-gray-50">
+    <!-- Breadcrumbs -->
+    <Breadcrumbs items={[
+      { label: 'Home', href: '/' },
+      { label: stateData.name, href: `/${stateData.abbreviation.toLowerCase()}/` },
+      { label: 'All Cities' }
+    ]} />
+    
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">
+            All Cities in {stateData.name}
+          </h1>
+          <p class="text-xl text-blue-100 mb-6">
+            {totalCities.toLocaleString()} cities with free government phone programs
+          </p>
+          <a href={`/${stateData.abbreviation.toLowerCase()}/`} class="inline-flex items-center text-white/80 hover:text-white transition-colors">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to {stateData.name}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alphabet Quick Jump -->
+    <section class="bg-white border-b sticky top-16 z-30">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex flex-wrap justify-center gap-1">
+          {alphabet.map((letter) => (
+            <a 
+              href={`#letter-${letter}`}
+              class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-blue-600 hover:text-white rounded text-sm font-medium text-gray-700 transition-colors"
+            >
+              {letter}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Cities List -->
+    <div class="container mx-auto px-4 py-12">
+      {alphabet.map((letter) => (
+        <section id={`letter-${letter}`} class="mb-12 scroll-mt-32">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl font-bold mr-4">
+              {letter}
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900">{letter}</h2>
+              <p class="text-gray-600">{citiesByLetter[letter].length} cities</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {citiesByLetter[letter].map((city) => (
+              <a 
+                href={`/${stateData.abbreviation.toLowerCase()}/${createCitySlug(city.name)}/`}
+                class="group block bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 hover:border-blue-400"
+              >
+                <h3 class="font-medium text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                  {city.name}
+                </h3>
+                {city.population && (
+                  <p class="text-xs text-gray-500 mt-1">
+                    {city.population.toLocaleString()} residents
+                  </p>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Back to Top -->
+    <div class="fixed bottom-8 right-8">
+      <a 
+        href="#"
+        class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
+        aria-label="Back to top"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-2xl font-bold mb-4">Ready to Get Your Free Government Phone?</h2>
+        <p class="text-blue-100 mb-6 max-w-xl mx-auto">
+          Government phone programs are available in all {totalCities.toLocaleString()} cities in {stateData.name}
+        </p>
+        <a href="/apply" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg transition-all transform hover:scale-105">
+          Check Eligibility Now
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,238 @@
+---
+import { getSiteName, getKeyword, getDomain, getSiteURL, getDesignDNA } from '../lib/site-config';
+import { getContentVariations } from '../lib/city-content-variations';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+const designDNA = getDesignDNA();
+const content = getContentVariations(domain);
+---
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": `How to Get Your ${keyword}`,
+  "description": `Step-by-step guide to applying for and receiving your ${keyword.toLowerCase()} through federal assistance programs`,
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Check Eligibility",
+      "text": "Enter your zip code and answer 3 simple questions. Takes 30 seconds. Verify your income or program participation status.",
+      "url": `${siteURL}/eligibility`
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Instant Approval",
+      "text": "Get approved immediately. No credit check required. No waiting period. High approval rate for qualified applicants.",
+      "url": `${siteURL}/apply`
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Get Your Phone",
+      "text": "Free smartphone shipped to your door. Service starts immediately. No activation fees. Fast shipping available.",
+      "url": `${siteURL}/apply`
+    }
+  ],
+  "totalTime": "PT2M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  }
+})} />
+
+<section class="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Mobile Section Header - Dynamic -->
+    <div class="md:hidden text-center mb-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">
+        Get Your {keyword} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
+      </h2>
+      <p class="text-base text-gray-600">
+        {content.footerTagline}
+      </p>
+    </div>
+
+    <!-- Desktop Section Header - Dynamic -->
+    <div class="hidden md:block text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Get Your {keyword} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        {content.footerTagline}. {content.ctaSubtext}
+      </p>
+    </div>
+
+    <!-- Mobile Steps Carousel -->
+    <div class="md:hidden">
+      <div class="relative">
+        <!-- Steps Container -->
+        <div class="flex snap-x snap-mandatory scrollbar-hide gap-4 pb-4" id="mobile-steps">
+          <!-- Step 1 -->
+          <div class="flex-none w-[85vw] snap-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 relative h-full">
+              <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Check Eligibility</h3>
+              <p class="text-gray-600 text-sm text-center mb-4">
+                Enter your zip code and answer 3 simple questions. 
+                <span class="font-semibold" style={`color: ${designDNA.colors.primary};`}>Takes 30 seconds.</span>
+              </p>
+              
+              <!-- Time Indicator -->
+              <div class="flex items-center justify-center text-sm text-gray-500">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg>
+                <span>30 seconds</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 - Dynamic -->
+          <div class="flex-none w-[85vw] snap-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 relative h-full">
+              <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">{content.featureTitles.approval}</h3>
+              <p class="text-gray-600 text-sm text-center mb-4">
+                {content.trustBadges[0]}. 
+                <span class="font-semibold" style={`color: ${designDNA.colors.accent};`}>{content.trustBadges[1]}.</span>
+              </p>
+              
+              <!-- Success Rate -->
+              <div class="flex items-center justify-center text-sm text-gray-500">
+                <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>98% approval rate</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex-none w-[85vw] snap-center">
+            <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 relative h-full">
+              <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Get Your Phone</h3>
+              <p class="text-gray-600 text-sm text-center mb-4">
+                Free smartphone shipped to your door. 
+                <span class="font-semibold" style={`color: ${designDNA.colors.accent};`}>Service starts immediately.</span>
+                No activation fees.
+              </p>
+              
+              <!-- Delivery Info -->
+              <div class="flex items-center justify-center text-sm text-gray-500">
+                <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                  <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
+                </svg>
+                <span>Free 2-day shipping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Carousel Indicators -->
+        <div class="flex justify-center space-x-2 mt-4">
+          <button class="w-2 h-2 rounded-full carousel-dot active" style={`background-color: ${designDNA.colors.primary};`} data-step="0"></button>
+          <button class="w-2 h-2 bg-gray-300 rounded-full carousel-dot" data-step="1"></button>
+          <button class="w-2 h-2 bg-gray-300 rounded-full carousel-dot" data-step="2"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile CTA -->
+    <div class="md:hidden text-center">
+              <a href="/apply" rel="noreferrer" class="block w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold py-4 px-6 rounded-2xl shadow-2xl transform active:scale-95 transition-all duration-150">
+        <div class="flex items-center justify-center">
+          <span class="text-lg">Start Application Now</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </div>
+      </a>
+      
+      <p class="text-xs text-gray-500 mt-3">
+        {content.ctaSubtext}
+      </p>
+    </div>
+
+    <!-- Desktop CTA - Dynamic -->
+    <div class="hidden md:block text-center">
+      <a href="/apply" rel="noreferrer" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-bold py-6 px-12 rounded-2xl text-xl shadow-2xl transform hover:scale-105 transition-all duration-200">
+        {content.ctaButton.toUpperCase()}
+      </a>
+      
+      <p class="text-sm text-gray-500 mt-6">
+        {content.ctaSubtext}
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Mobile carousel functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileSteps = document.getElementById('mobile-steps');
+    const indicators = document.querySelectorAll('[data-step]');
+    
+    if (mobileSteps && indicators.length > 0) {
+      let currentStep = 0;
+      
+      // Update indicators - uses CSS variable for dynamic color
+      function updateIndicators(index: number) {
+        indicators.forEach((indicator, i) => {
+          const el = indicator as HTMLElement;
+          if (i === index) {
+            el.classList.remove('bg-gray-300');
+            el.classList.add('active');
+            el.style.backgroundColor = 'var(--color-primary)';
+          } else {
+            el.classList.remove('active');
+            el.classList.add('bg-gray-300');
+            el.style.backgroundColor = '';
+          }
+        });
+      }
+      
+      // Handle scroll
+      mobileSteps.addEventListener('scroll', () => {
+        const scrollPosition = mobileSteps.scrollLeft;
+        const firstStep = mobileSteps.querySelector('.flex-none') as HTMLElement;
+        if (!firstStep) return;
+        const stepWidth = firstStep.offsetWidth + 16; // width + gap
+        const newStep = Math.round(scrollPosition / stepWidth);
+        
+        if (newStep !== currentStep) {
+          currentStep = newStep;
+          updateIndicators(currentStep);
+        }
+      });
+      
+      // Handle indicator clicks
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          const firstStep = mobileSteps.querySelector('.flex-none') as HTMLElement;
+          if (!firstStep) return;
+          const stepWidth = firstStep.offsetWidth + 16;
+          mobileSteps.scrollTo({
+            left: stepWidth * index,
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Hide scrollbar for mobile carousel */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style> 

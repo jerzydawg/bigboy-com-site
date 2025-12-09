@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const pageTitle = `${keyword} - Apply in 2 Minutes | ${siteName}`;
+const pageDescription = `Apply for my gov phone program in just 2 minutes. Get approved fast for your free government phone and data plan. Quick eligibility check available now.`;
+---
+
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+  keywords="my gov phone, apply free phone, government phone application, get approved fast"
+  ogImage={`${siteURL}/og-image.jpg`}
+>
+  <!-- Breadcrumb Navigation -->
+  <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
+    <div class="container mx-auto px-4">
+      <ol class="flex items-center space-x-2 text-sm">
+        <li><a href="/" class="text-[var(--color-primary)] hover:underline">Home</a></li>
+        <li class="text-gray-500">/</li>
+        <li class="text-gray-900 font-medium">Apply</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        my gov phone - Apply in 2 Minutes
+      </h1>
+      <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+        Get your free government phone today. Quick application process with instant eligibility verification. No credit checks, no hidden fees, just free service.
+      </p>
+      <button class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-8 rounded-xl shadow-lg text-lg">
+        Start Your Application Now
+      </button>
+    </section>
+
+    <!-- Eligibility Checker -->
+    <section id="eligibility-checker" class="mb-16">
+      <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+          Quick Eligibility Check
+        </h2>
+        <p class="text-gray-600 mb-8 text-center">
+          Answer these simple questions to see if you qualify for <strong>my gov phone</strong> program instantly.
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-gray-900">Income-Based Qualification</h3>
+            <div class="space-y-3">
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">Household income at or below 135% of Federal Poverty Guidelines</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">Participate in SNAP (Food Stamps)</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">Receive Medicaid benefits</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-gray-900">Program-Based Qualification</h3>
+            <div class="space-y-3">
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">SSI (Supplemental Security Income)</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">Federal Public Housing Assistance</span>
+              </label>
+              <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="w-5 h-5 text-[var(--color-primary)]">
+                <span class="text-gray-700">WIC (Women, Infants, and Children)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-8">
+          <button class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-8 rounded-xl shadow-lg">
+            Check My Eligibility
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Steps -->
+    <section id="application-steps" class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        How to Apply for Your Free Phone
+      </h2>
+      <p class="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+        Getting <strong>my gov phone</strong> through big boy takes just minutes. Follow these simple steps to receive your free device and monthly service.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style="background-color: var(--color-primary)">
+            1
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Submit Basic Info</h3>
+          <p class="text-gray-600">
+            Provide your name, address, and qualifying program information. Takes less than 60 seconds to complete.
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style="background-color: var(--color-primary)">
+            2
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Upload Documents</h3>
+          <p class="text-gray-600">
+            Upload proof of income or program participation. Accept photos from your phone for instant verification.
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold text-xl" style="background-color: var(--color-primary)">
+            3
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Get Your Phone</h3>
+          <p class="text-gray-600">
+            Receive approval notification within minutes. Your free phone ships directly to your door at no cost.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What to Expect -->
+    <section id="what-to-expect" class="mb-16">
+      <div class="bg-gray-50 rounded-2xl p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+          What You Get with Your Free Phone
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Free Smartphone Features</h3>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-center space-x-3">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--color-primary)"></span>
+                <span>4G LTE Android smartphone</span>
+              </li>
+              <li class="flex items-center space-x-3">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--color-primary)"></span>
+                <span>High-resolution touchscreen display</span>
+              </li>
+              <li class="flex items-center space-x-3">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--color-primary)"></span>
+                <span>Front and rear cameras for photos</span>
+              </li>
+              <li class="flex items-center space-x-3">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--color-primary)"></span>
+                <span

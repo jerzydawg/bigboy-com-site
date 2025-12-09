@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = 'my gov phone - Get Your Free Phone Today | State Programs';
+const description = 'Find your state\'s free phone program with my gov phone. Get free smartphones, unlimited data, and service through government assistance programs in all 50 states.';
+const canonicalURL = new URL('/state-programs', siteURL).href;
+---
+
+<Layout 
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "my gov phone - Get Your Free Phone Today | State Programs",
+      "description": "Find your state's free phone program with my gov phone. Get free smartphones, unlimited data, and service through government assistance programs in all 50 states.",
+      "author": {
+        "@type": "Organization",
+        "name": "big boy"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "big boy"
+      },
+      "datePublished": "2025-12-09",
+      "dateModified": "2025-12-09"
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which states offer the best free phone programs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All 50 states participate in the federal Lifeline program, but some states like California, Texas, Florida, and New York have additional benefits and faster approval processes for free phone services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to get approved in my state?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most states process applications within 7-14 business days. Some states offer instant approval for qualifying government benefit recipients."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I keep my current phone number when switching states?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can port your existing phone number to your new free government phone service when you move to a different state."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <nav class="bg-white border-b border-gray-200 mb-6" aria-label="Breadcrumb">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ol class="flex items-center space-x-2 py-4 text-sm">
+        <li>
+          <a href="/" class="text-gray-500 hover:text-[var(--color-primary)]">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-900 font-medium">State Programs</li>
+      </ol>
+    </div>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        my gov phone - Get Your Free Phone Today
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed">
+        Discover free phone programs available in your state and get connected today
+      </p>
+    </header>
+
+    <div class="prose max-w-none">
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
+          Find Free Phone Programs in Your State
+        </h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          Every state offers free phone programs through the federal Lifeline service, but each location has unique benefits and application processes. When you search for my gov phone options in your area, you'll discover that some states provide additional perks like extra data, better phone models, or faster approval times. The key is knowing which providers operate in your state and what specific benefits they offer.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          State regulations and partnerships with wireless carriers create different experiences for applicants. Some states have streamlined their processes to get you connected within days, while others may take longer but offer more comprehensive services. Understanding your state's specific program helps you choose the best option for your needs.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
+          How to Get Your Free Phone in Any State
+        </h2>
+        <div class="bg-gray-50 p-6 rounded-lg mb-4">
+          <ol class="list-decimal list-inside space-y-3 text-gray-700">
+            <li><strong>Check your state's participating providers</strong> - Each state has different wireless companies offering my gov phone services</li>
+            <li><strong>Verify your eligibility</strong> - Requirements stay consistent across states, but documentation may vary</li>
+            <li><strong>Choose your provider</strong> - Compare phone models, data allowances, and coverage in your area</li>
+            <li><strong>Complete the application</strong> - Most states offer online, phone, or in-person application options</li>
+            <li><strong>Submit required documents</strong> - Upload or mail proof of eligibility and identity</li>
+            <li><strong>Receive approval notification</strong> - Wait times vary by state, typically 7-14 business days</li>
+            <li><strong>Get your phone delivered</strong> - Most providers ship directly to your address within 5-10 business days</li>
+          </ol>
+        </div>
+        <p class="text-gray-700 leading-relaxed">
+          The team at big boy has helped thousands of people navigate these state-specific requirements. We recommend starting your application early in the month when processing times are typically faster, and always keep copies of your documentation for future reference.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
+          What You Get with State Free Phone Programs
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6 mb-4">
+          <div class="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Free Smartphone</h3>
+            <ul class="space-y-2 text-gray-700 text-sm">
+              <li>• Android smartphones with touchscreens</li>
+              <li>• Camera and multimedia capabilities</li>
+              <li>• Wi-Fi connectivity</li>
+              <li>• Access to app stores</li>
+            </ul>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Monthly Service</h3>
+            <ul class="space-y-2 text-gray-700 text-sm">
+              <li>• Unlimited talk and text</li>
+              <li>• High-speed data allowance</li>
+              <li>• National coverage</li>
+              <li>• No activation fees or deposits</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4" style="color: var(--color-primary)">
+          Popular States for Free Phone Programs
+        </h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-4">
+          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-900 mb-2">California</h3>
+            <p class="text-sm text-gray-700">Multiple providers, excellent coverage, fast approval process</p>
+          </div>
+          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-900 mb-2">Texas</h3>
+            <p class="text-sm text-gray-700">Wide provider selection, rural coverage options, quick delivery</p>
+          </div>
+          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-900 mb-2">Florida</h3>
+            <p class="text-sm text-gray-700">Senior-friendly programs, bilingual support, hurricane preparedness</p>
+          </div>
+          <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-gray-900 mb-2">New York</h3>
+            <p class="text-sm text-gray-700">Urban coverage, multiple language options,

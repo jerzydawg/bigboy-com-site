@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteName, getKeyword, getDomain, getSiteURL } from '../lib/site-config';
+
+const siteName = getSiteName();
+const keyword = getKeyword();
+const domain = getDomain();
+const siteURL = getSiteURL();
+
+const title = `${keyword} - Do You Qualify? Check Now | ${siteName}`;
+const description = `Find out if you qualify for ${keyword} programs. Check income requirements, eligible programs, and required documents to get your free phone and service.`;
+const canonicalURL = `${siteURL}/eligibility`;
+
+const jsonLD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": title,
+      "description": description,
+      "url": canonicalURL,
+      "datePublished": "2025-12-09T10:00:00-05:00",
+      "dateModified": "2025-12-09T10:00:00-05:00",
+      "author": {
+        "@type": "Organization",
+        "name": siteName
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": siteName,
+        "url": siteURL
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What income limits qualify for free phone programs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most programs require your household income to be at or below 200% of Federal Poverty Guidelines. For a single person, this means earning less than $2,510 per month in 2025."
+          }
+        },
+        {
+          "@type": "Question", 
+          "name": "Can I get a free phone if I receive SNAP benefits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if you receive SNAP, Medicaid, SSI, or other qualifying government assistance programs, you automatically qualify for free phone service regardless of your income."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What documents do I need to apply?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You'll need a government-issued ID and proof of eligibility - either recent benefit award letters or income documentation like pay stubs or tax returns."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description} canonicalURL={canonicalURL}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
+  
+  <main class="min-h-screen bg-gray-50">
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b">
+      <div class="container mx-auto px-4 py-3">
+        <nav class="flex text-sm">
+          <a href="/" class="text-[var(--color-primary)] hover:underline">Home</a>
+          <span class="mx-2 text-gray-500">/</span>
+          <span class="text-gray-700">Eligibility</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">{keyword} - Do You Qualify? Check Now</h1>
+        <p class="text-xl mb-6 max-w-2xl mx-auto">Find out in minutes if you qualify for a free phone and service. Check the simple requirements and get your phone today.</p>
+        <a href="/apply" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg inline-block">
+          Check Your Eligibility Now
+        </a>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Intro -->
+          <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--color-primary)">Who Qualifies for Free Phone Programs?</h2>
+            <p class="text-gray-700 mb-4">
+              Getting your <strong>{keyword}</strong> is easier than you think. The federal Lifeline program helps millions of Americans stay connected with free phones and monthly service. Whether you receive government benefits or have a limited income, you likely qualify for this essential service through {siteName}.
+            </p>
+            <p class="text-gray-700 mb-4">
+              These programs exist because staying connected isn't a luxury - it's necessary for finding jobs, accessing healthcare, and keeping in touch with family. Your <strong>{keyword}</strong> comes with no monthly bills, no contracts, and no credit checks required.
+            </p>
+          </section>
+
+          <!-- Income Eligibility -->
+          <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--color-primary)">Income Requirements Made Simple</h2>
+            <p class="text-gray-700 mb-4">
+              If your household income falls at or below 200% of Federal Poverty Guidelines, you qualify for free phone service. Here's what that means in real numbers for 2025:
+            </p>
+            <div class="bg-gray-50 rounded-lg p-6 mb-4">
+              <h3 class="font-semibold mb-3">Monthly Income Limits:</h3>
+              <ul class="space-y-2">
+                <li class="flex justify-between">
+                  <span>1 Person:</span>
+                  <span class="font-semibold">$2,510 or less</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>2 People:</span>
+                  <span class="font-semibold">$3,407 or less</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>3 People:</span>
+                  <span class="font-semibold">$4,303 or less</span>
+                </li>
+                <li class="flex justify-between">
+                  <span>4 People:</span>
+                  <span class="font-semibold">$5,200 or less</span>
+                </li>
+              </ul>
+            </div>
+            <p class="text-gray-700">
+              Don't worry about calculating exact amounts - when you apply for your <strong>{keyword}</strong>, {siteName} makes the qualification process straightforward with instant verification.
+            </p>
+          </section>
+
+          <!-- Program Eligibility -->
+          <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--color-primary)">Automatic Qualification Programs</h2>
+            <p class="text-gray-700 mb-4">
+              If you receive any of these benefits, you automatically qualify for your <strong>{keyword}</strong> regardless of income:
+            </p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-green-50 rounded-lg p-4">
+                <h3 class="font-semibold text-green-800 mb-2">Food & Health Benefits</h3>
+                <ul class="space-y-1 text-green-700">
+                  <li>• SNAP (Food Stamps)</li>
+                  <li>• Medicaid</li>
+                  <li>• WIC</li>
+                  <li>• Free School Lunch</li>
+                </ul>
+              </div>
+              <div class="bg-blue-50 rounded-lg p-4">
+                <h3 class="font-semibold text-blue-800 mb-2">Income Support</h3>
+                <ul class="space-y-1 text-blue-700">
+                  <li>• SSI</li>
+                  <li>• SSDI</li>
+                  <li>• TANF</li>
+                  <li>• Housing Assistance</li>
+                </ul>
+              </div>
+            </div>
+            <p class="text-gray-700 mt-4">
+              Having any qualifying benefit makes getting your free phone through {siteName} completely automatic - no income verification needed.
+            </p>
+          </section>
+
+          <!-- Documents Needed -->
+          <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--color-primary)">What You Need to Apply</h2>
+            <p class="text-gray-700 mb-4">
+              Applying for your <strong>{keyword}</strong> requires just two things - identification and proof of eligibility:
+            </p>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="font-semibold mb-3" style="color: var(--color-primary)">Required ID (pick one):</h3>
+                <ul class="space-y-2 text-gray-700">
+                  <li>• Driver's License</li>
+                  <li>• State ID Card</li>
+                  <li>• Passport</li>

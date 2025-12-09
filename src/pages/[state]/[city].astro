@@ -1,0 +1,786 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RelatedCities from '../../components/RelatedCities.astro';
+import SimilarCities from '../../components/SimilarCities.astro';
+import { supabase } from '../../lib/supabase';
+import { createCitySlug, slugToCityName, generateCityNameVariationsForLookup } from '../../lib/slug-utils.js';
+// SINGLE SOURCE: All city content variations from one file
+import { 
+  getCityContentVariations,
+  getCityStats,
+  getCityFacts,
+  type CityData,
+  type StateData
+} from '../../lib/city-content-variations';
+import { getSiteURL, getDomain } from '../../lib/site-config';
+
+export const prerender = false;
+
+const SITE_URL = getSiteURL();
+const DOMAIN = getDomain();
+
+// Get the state and city from URL params
+const { state, city } = Astro.params;
+
+// Fetch city data from Supabase
+let cityData = null;
+let stateData = null;
+let error = null;
+
+// Check if Supabase is available
+if (!supabase) {
+  console.error('Supabase client not available - missing environment variables');
+  error = 'Database not configured';
+} else {
+  try {
+    // Validate params
+    if (!state || !city) {
+      error = 'Invalid parameters';
+    } else {
+      // Get state data
+      const { data: stateResult, error: stateError } = await supabase
+        .from('states')
+        .select('*')
+        .eq('abbreviation', state.toUpperCase())
+        .maybeSingle();
+        
+      if (stateError) {
+        console.error('State lookup error:', stateError);
+        error = 'State not found';
+      } else if (!stateResult) {
+        error = 'State not found';
+      } else {
+        stateData = stateResult;
+      }
+      
+      // Get city data
+      if (stateData && !error) {
+        // Generate all possible city name variations
+        const nameVariations = generateCityNameVariationsForLookup(city);
+        let cityResult = null;
+        let cityError = null;
+        
+        // Try each variation until we find a match
+        for (const cityName of nameVariations) {
+          const result = await supabase
+            .from('cities')
+            .select('*')
+            .eq('state_id', stateData.id)
+            .eq('name', cityName)
+            .maybeSingle();
+          
+          if (result.data && !result.error) {
+            cityResult = result.data;
+            break;
+          }
+          
+          // If exact match fails, try case-insensitive
+          if (!result.data) {
+            const caseResult = await supabase
+              .from('cities')
+              .select('*')
+              .eq('state_id', stateData.id)
+              .ilike('name', cityName)
+              .maybeSingle();
+            
+            if (caseResult.data && !caseResult.error) {
+              cityResult = caseResult.data;
+              break;
+            }
+          }
+        }
+        
+        if (!cityResult) {
+          console.error('City not found after trying variations:', nameVariations);
+          error = 'City not found';
+        } else {
+          cityData = cityResult;
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Database error:', err);
+    error = 'Database error';
+    // Don't throw - return 404 instead to prevent 500 errors
+  }
+}
+
+// Fetch related cities in the same state
+let relatedCities: Array<{
+  name: string;
+  state_abbreviation: string;
+  population?: number;
+  id?: number;
+}> = [];
+
+if (cityData && stateData && supabase && !error) {
+  try {
+    const { data: relatedCitiesData } = await supabase
+      .from('cities')
+      .select('id, name, population')
+      .eq('state_id', stateData.id)
+      .neq('id', cityData.id)
+      .order('population', { ascending: false })
+      .limit(9);
+    
+    if (relatedCitiesData) {
+      relatedCities = relatedCitiesData.map(city => ({
+        name: city.name,
+        state_abbreviation: stateData.abbreviation,
+        population: city.population,
+        id: city.id
+      }));
+    }
+  } catch (err) {
+    console.error('Error fetching related cities:', err);
+    // Don't fail the page if related cities can't be loaded
+  }
+}
+
+// Fetch similar cities from OTHER states (by similar population)
+let similarCities: Array<{
+  name: string;
+  state_abbr: string;
+  state_name: string;
+  population?: number;
+}> = [];
+
+if (cityData && stateData && supabase && !error) {
+  try {
+    const pop = cityData.population || 50000;
+    const minPop = Math.max(1000, pop * 0.5);
+    const maxPop = pop * 2;
+    
+    const { data: similarData } = await supabase
+      .from('cities')
+      .select('name, population, state_id, states(abbreviation, name)')
+      .neq('state_id', stateData.id)
+      .gte('population', minPop)
+      .lte('population', maxPop)
+      .order('population', { ascending: false })
+      .limit(12);
+    
+    if (similarData) {
+      similarCities = similarData.map((city: any) => ({
+        name: city.name,
+        state_abbr: city.states?.abbreviation || '',
+        state_name: city.states?.name || '',
+        population: city.population
+      })).filter((c: any) => c.state_abbr);
+    }
+  } catch (err) {
+    console.error('Error fetching similar cities:', err);
+  }
+}
+
+// If data not found, return 404 (not 500)
+if (error || !cityData || !stateData) {
+  console.log('Redirecting to 404 - State:', stateData?.name || 'not found', 'City:', cityData?.name || 'not found');
+  return Astro.redirect('/404');
+}
+
+const cityName = cityData.name;
+const stateName = stateData.name;
+const stateAbbr = stateData.abbreviation;
+
+// Get city statistics
+const cityStats = getCityStats(cityData as CityData);
+const population = cityStats.population || cityData.population || 0;
+
+// Get COMPOUND-HASH content variations for 99-100% uniqueness across 1000+ sites
+// Uses domain + city name for maximum variation distribution
+const variations = getCityContentVariations(
+  DOMAIN,
+  cityName,
+  stateAbbr,
+  population
+);
+
+// Get city facts (uses city data, not domain hash)
+const cityDataForFacts: CityData = {
+  id: cityData.id || 0,
+  name: cityData.name,
+  state_id: stateData.id,
+  population: cityData.population,
+  stats: cityData.stats
+};
+const cityFacts = getCityFacts(cityName, stateName, stateAbbr, cityDataForFacts);
+
+// SEO-optimized content with variations
+const title = `Free Government Phone in ${cityName}, ${stateAbbr} (2025 Guide)`;
+// Use domain-based variations for unique meta description
+const description = `Get a FREE government phone in ${cityName}, ${stateAbbr}. Learn about Lifeline & ACP programs, eligibility requirements, and how to apply. Updated 2025 guide.`;
+
+// Ensure canonical URL has trailing slash
+const citySlug = createCitySlug(cityName);
+const canonicalUrl = new URL(`/${stateAbbr.toLowerCase()}/${citySlug}/`, SITE_URL);
+
+// Enhanced structured data with city-specific information
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": `Free Government Phone in ${cityName}, ${stateAbbr}`,
+  "description": description,
+  "url": canonicalUrl.toString(),
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `Who qualifies for federal communication assistance in ${cityName}, ${stateAbbr}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You may qualify if you participate in federal assistance programs like Medicaid, SNAP, SSI, or if your household income is at or below 135% of the Federal Poverty Guidelines."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `How long does approval take for federal communication assistance in ${cityName}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": variations.faqApprovalTime
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `Can I keep my current phone number in ${cityName}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": variations.faqKeepNumber
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `What documents do I need to apply in ${cityName}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": variations.faqDocuments
+        }
+      }
+    ]
+  }
+};
+
+// Add City schema
+const citySchema: any = {
+  "@context": "https://schema.org",
+  "@type": "City",
+  "name": cityName,
+  "containedIn": {
+    "@type": "State",
+    "name": stateName,
+    "abbreviation": stateAbbr
+  }
+};
+if (population) {
+  citySchema.population = population;
+}
+
+// Add LocalBusiness schema for providers
+const providerSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": `Government Phone Providers in ${cityName}`,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": cityName,
+    "addressRegion": stateAbbr,
+    "addressCountry": "US"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": cityName
+  }
+};
+
+const breadcrumbData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": `${SITE_URL}/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": stateName,
+      "item": `${SITE_URL}/${stateAbbr.toLowerCase()}/`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": cityName,
+      "item": canonicalUrl.toString()
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description} canonicalURL={canonicalUrl}>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-[#3F51B5] via-[#5C6BC0] to-[#7986CB] text-white">
+    <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          Free Government Phone in <span class="text-[#FF6F61]">{cityName}, {stateAbbr}</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-white max-w-3xl mx-auto">
+          Access free smartphone and monthly service through the Lifeline & ACP programs. 
+          <span class="font-semibold">No credit check, no hidden fees, instant approval.</span>
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <a href="/apply" class="btn-accent text-lg px-8 py-4 font-bold shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 transition-all duration-300 inline-block text-center">
+            Verify Eligibility Now
+          </a>
+          <a href="/providers" class="bg-white/20 hover:bg-white/30 text-white font-semibold px-8 py-4 rounded-lg border-2 border-white/30 transition-all duration-300 inline-block text-center">
+            View Providers
+          </a>
+        </div>
+        
+        <!-- Trust Badges -->
+        <div class="flex flex-wrap justify-center items-center gap-6 opacity-90">
+          <div class="trust-badge">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-[#43AA8B]" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-sm font-medium">FCC Approved</span>
+            </div>
+          </div>
+          <div class="trust-badge">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-[#43AA8B]" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span class="text-sm font-medium">No Credit Check</span>
+            </div>
+          </div>
+          <div class="trust-badge">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-[#43AA8B]" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-sm font-medium">Instant Approval</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumbs -->
+  <section class="bg-white border-b border-[#E5E7EB]">
+    <div class="container mx-auto px-4 py-4">
+      <nav class="flex items-center space-x-2 text-sm text-[#6B7280]">
+        <a href="/" class="hover:text-[#3F51B5] transition-colors">Home</a>
+        <span>/</span>
+        <a href={`/${stateAbbr.toLowerCase()}/`} class="hover:text-[#3F51B5] transition-colors">{stateName}</a>
+        <span>/</span>
+        <span class="text-[#22223B] font-medium">{cityName}</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <!-- Main Article Content -->
+      <div class="lg:col-span-2">
+        <article class="prose prose-lg max-w-none">
+          <!-- Introduction - Domain-based unique content -->
+          <div class="mb-8">
+            <h2 class="text-3xl font-bold text-[#22223B] mb-4">
+              Access Free Government Phone in {cityName}
+            </h2>
+            <p class="text-lg text-[#6B7280] leading-relaxed" set:html={variations.intro} />
+          </div>
+
+          <!-- City Information Section -->
+          {population && (
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 mb-8 border border-blue-100">
+              <h3 class="text-xl font-bold text-[#22223B] mb-4">About {cityName}, {stateAbbr}</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {population && (
+                  <div class="flex items-start">
+                    <svg class="w-5 h-5 text-[#3F51B5] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    <div>
+                      <p class="font-semibold text-[#22223B]">Population</p>
+                      <p class="text-[#6B7280] text-sm">{population.toLocaleString()} residents</p>
+                    </div>
+                  </div>
+                )}
+                <div class="flex items-start">
+                  <svg class="w-5 h-5 text-[#3F51B5] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  </svg>
+                  <div>
+                    <p class="font-semibold text-[#22223B]">Location</p>
+                    <p class="text-[#6B7280] text-sm">{cityName}, {stateAbbr}</p>
+                  </div>
+                </div>
+              </div>
+              {cityFacts.length > 0 && (
+                <div class="mt-4 pt-4 border-t border-blue-200">
+                  <ul class="space-y-2 text-[#6B7280] text-sm">
+                    {cityFacts.map((fact) => (
+                      <li class="flex items-start">
+                        <svg class="w-4 h-4 text-[#43AA8B] mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span set:html={fact} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          <!-- Table of Contents -->
+          <div class="bg-[#F8F9FA] rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-[#22223B] mb-4">Table of Contents</h3>
+            <ul class="space-y-2 text-[#6B7280]">
+              <li><a href="#eligibility" class="hover:text-[#3F51B5] transition-colors">1. Who Qualifies for Free Government Phone in {cityName}?</a></li>
+              <li><a href="#how-to-apply" class="hover:text-[#3F51B5] transition-colors">2. How to Apply for the Lifeline & ACP Programs</a></li>
+              <li><a href="#providers" class="hover:text-[#3F51B5] transition-colors">3. Best Providers in {cityName}, {stateAbbr}</a></li>
+              <li><a href="#benefits" class="hover:text-[#3F51B5] transition-colors">4. Benefits of Free Government Phone</a></li>
+              <li><a href="#faq" class="hover:text-[#3F51B5] transition-colors">5. Frequently Asked Questions</a></li>
+              <li><a href="#contact" class="hover:text-[#3F51B5] transition-colors">6. Contact & Support</a></li>
+            </ul>
+          </div>
+
+          <!-- Eligibility Section - Domain-based unique content -->
+          <section id="eligibility" class="mb-12">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              {variations.headingQualifies}
+            </h2>
+            <p class="text-[#6B7280] mb-6">
+              {variations.qualifiesIntro}
+            </p>
+            <ul class="space-y-3 text-[#6B7280] mb-6">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#43AA8B] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Participate in government assistance programs (Medicaid, SNAP, SSI, Federal Public Housing, etc.)
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#43AA8B] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Household income is at or below 135% of the Federal Poverty Guidelines
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#43AA8B] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Receive benefits from the National School Lunch Program or WIC
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#43AA8B] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Participate in Tribal-specific programs (if applicable)
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#43AA8B] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Receive a Federal Pell Grant in the current award year
+              </li>
+            </ul>
+            <p class="text-[#6B7280] leading-relaxed">
+              <strong>Proof of eligibility</strong> is required during the application process. This can include benefit letters, 
+              pay stubs, or other official documentation showing your participation in qualifying programs or income level.
+            </p>
+          </section>
+
+          <!-- How to Apply Section - Domain-based unique content -->
+          <section id="how-to-apply" class="mb-16">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              {variations.headingHowTo}
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div class="text-center">
+                <div class="step-number mx-auto mb-4">1</div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">Check Your Eligibility</h3>
+                <p class="text-[#6B7280] text-sm">
+                  {variations.step1}
+                </p>
+              </div>
+              <div class="text-center">
+                <div class="step-number mx-auto mb-4">2</div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">Choose a Provider</h3>
+                <p class="text-[#6B7280] text-sm">
+                  {variations.step2}
+                </p>
+              </div>
+              <div class="text-center">
+                <div class="step-number mx-auto mb-4">3</div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">Submit Your Application</h3>
+                <p class="text-[#6B7280] text-sm">
+                  {variations.step3}
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-[#F8F9FA] rounded-lg p-6">
+              <h3 class="text-lg font-bold text-[#22223B] mb-4">Step 4: Receive Your Free Phone</h3>
+              <p class="text-[#6B7280] leading-relaxed">
+                {variations.step4}
+              </p>
+            </div>
+          </section>
+
+          <!-- Providers Section - Domain-based unique content -->
+          <section id="providers" class="mb-16">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              {variations.headingProviders}
+            </h2>
+            <p class="text-[#6B7280] mb-8 leading-relaxed">
+              Some of the top Lifeline and ACP providers serving <strong>{cityName}</strong> include:
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="card-hover p-6 flex flex-col items-center text-center">
+                <h3 class="text-lg font-bold text-[#22223B] mb-2 w-full">Assurance Wireless</h3>
+                <p class="text-[#6B7280] text-sm mb-4 w-full">{variations.providerAssurance}</p>
+                <a href="/apply" class="btn-primary text-sm w-full text-center mt-auto">Apply Now</a>
+              </div>
+              <div class="card-hover p-6 flex flex-col items-center text-center">
+                <h3 class="text-lg font-bold text-[#22223B] mb-2 w-full">Safelink Wireless</h3>
+                <p class="text-[#6B7280] text-sm mb-4 w-full">{variations.providerSafelink}</p>
+                <a href="/apply" class="btn-primary text-sm w-full text-center mt-auto">Apply Now</a>
+              </div>
+              <div class="card-hover p-6 flex flex-col items-center text-center">
+                <h3 class="text-lg font-bold text-[#22223B] mb-2 w-full">Q Link Wireless</h3>
+                <p class="text-[#6B7280] text-sm mb-4 w-full">{variations.providerQlink}</p>
+                <a href="/apply" class="btn-primary text-sm w-full text-center mt-auto">Apply Now</a>
+              </div>
+              <div class="card-hover p-6 flex flex-col items-center text-center">
+                <h3 class="text-lg font-bold text-[#22223B] mb-2 w-full">enTouch Wireless</h3>
+                <p class="text-[#6B7280] text-sm mb-4 w-full">{variations.providerEntouch}</p>
+                <a href="/apply" class="btn-primary text-sm w-full text-center mt-auto">Apply Now</a>
+              </div>
+            </div>
+            
+            <p class="text-[#6B7280] mt-8 leading-relaxed">
+              Compare plans, coverage, and customer reviews to find the best fit for your needs in {cityName}. 
+              Each provider offers different benefits, so it's important to choose one that works well in your area.
+            </p>
+          </section>
+
+          <!-- Benefits Section - Domain-based unique content -->
+          <section id="benefits" class="mb-16">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              {variations.headingBenefits}
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div class="text-center">
+                <div class="feature-icon mx-auto mb-4">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">{variations.benefitsConnectivity.title}</h3>
+                <ul class="text-[#6B7280] text-sm space-y-1">
+                  {variations.benefitsConnectivity.bullets.map((bullet) => (
+                    <li>• {bullet}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="text-center">
+                <div class="feature-icon mx-auto mb-4">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                  </svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">{variations.benefitsNoCost.title}</h3>
+                <ul class="text-[#6B7280] text-sm space-y-1">
+                  {variations.benefitsNoCost.bullets.map((bullet) => (
+                    <li>• {bullet}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="text-center">
+                <div class="feature-icon mx-auto mb-4">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                  </svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#22223B] mb-2">{variations.benefitsEmergency.title}</h3>
+                <ul class="text-[#6B7280] text-sm space-y-1">
+                  {variations.benefitsEmergency.bullets.map((bullet) => (
+                    <li>• {bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAQ Section - Domain-based unique content -->
+          <section id="faq" class="mb-16">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              {variations.headingFaq}
+            </h2>
+            
+            <div class="space-y-8">
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">How long does it take to get approved?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqApprovalTime}
+                </p>
+              </div>
+              
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">Can I keep my current phone number?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqKeepNumber}
+                </p>
+              </div>
+              
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">What documents do I need?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqDocuments}
+                </p>
+              </div>
+              
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">Is this program available to everyone in {cityName}?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqEveryoneEligible}
+                </p>
+              </div>
+              
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">What is the service quality like?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqServiceQuality}
+                </p>
+              </div>
+              
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">Can multiple people in my household get phones?</h3>
+                <p class="text-[#6B7280]">
+                  {variations.faqMultiplePhones}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contact Section -->
+          <section id="contact" class="mb-16">
+            <h2 class="text-2xl font-bold text-[#22223B] mb-6">
+              Contact & Support
+            </h2>
+            <p class="text-[#6B7280] mb-8 leading-relaxed">
+              For more information or help with your application in <strong>{cityName}, {stateAbbr}</strong>, contact:
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">Provider Support</h3>
+                <p class="text-[#6B7280] text-sm mb-6 leading-relaxed">
+                  Contact your chosen provider directly for application assistance and service questions.
+                </p>
+                <a href="/providers" class="btn-primary text-sm inline-block text-center">View Providers</a>
+              </div>
+              <div class="card">
+                <h3 class="text-lg font-bold text-[#22223B] mb-3">Program Support</h3>
+                <p class="text-[#6B7280] text-sm mb-6 leading-relaxed">
+                  Get help with Lifeline and ACP program questions from official sources.
+                </p>
+                <a href="/contact" class="btn-primary text-sm inline-block text-center">Contact Us</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Final CTA - Domain-based unique content -->
+          <div class="bg-gradient-to-r from-[#3F51B5] to-[#5C6BC0] rounded-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">{variations.cta.headline}</h2>
+            <p class="text-white/90 mb-6">
+              {variations.cta.subtext}
+            </p>
+            <a href="/apply" class="btn-accent text-lg px-8 py-4 font-bold inline-block text-center">
+              {variations.cta.button}
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Quick Apply Widget -->
+        <div class="card-hover p-6 mb-8">
+          <h3 class="text-xl font-bold text-[#22223B] mb-4">Quick Apply</h3>
+          <p class="text-[#6B7280] mb-6">
+            Access federal communication assistance in {cityName} in just 2 minutes. No credit check required.
+          </p>
+          <a href="/apply" class="btn-accent w-full text-center block">
+            Apply Now
+          </a>
+        </div>
+
+        <!-- Eligibility Checker -->
+        <div class="card-hover p-6 mb-8">
+          <h3 class="text-xl font-bold text-[#22223B] mb-4">Check Eligibility</h3>
+          <p class="text-[#6B7280] mb-6">
+            See if you qualify for federal communication assistance in {cityName}.
+          </p>
+          <a href="/eligibility" class="btn-primary w-full text-center block">
+            Check Now
+          </a>
+        </div>
+
+        <!-- Related Links -->
+        <div class="card-hover p-6">
+          <h3 class="text-xl font-bold text-[#22223B] mb-4">Related Links</h3>
+          <ul class="space-y-3">
+            <li><a href="/lifeline-program" class="text-[#6B7280] hover:text-[#3F51B5] transition-colors">Lifeline Program</a></li>
+            <li><a href="/acp-program" class="text-[#6B7280] hover:text-[#3F51B5] transition-colors">ACP Program</a></li>
+            <li><a href="/providers" class="text-[#6B7280] hover:text-[#3F51B5] transition-colors">Top Providers</a></li>
+            <li><a href="/faq" class="text-[#6B7280] hover:text-[#3F51B5] transition-colors">FAQ</a></li>
+            <li><a href="/contact" class="text-[#6B7280] hover:text-[#3F51B5] transition-colors">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Cities Section -->
+  {relatedCities && relatedCities.length > 0 && (
+    <RelatedCities 
+      cities={relatedCities}
+      stateName={stateName}
+      stateAbbreviation={stateAbbr}
+      currentCityName={cityName}
+      maxCities={6}
+    />
+  )}
+
+  <!-- Similar Cities in Other States -->
+  {similarCities && similarCities.length > 0 && (
+    <SimilarCities 
+      currentCityName={cityName}
+      currentStateAbbr={stateAbbr}
+      currentPopulation={population}
+      similarCities={similarCities}
+    />
+  )}
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(citySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(providerSchema)} />
+</Layout> 

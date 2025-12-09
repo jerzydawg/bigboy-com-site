@@ -27,7 +27,7 @@ export interface SiteConfig {
 // ===== SITE CONFIG - REPLACED AT BUILD TIME =====
 // DO NOT MODIFY THIS SECTION MANUALLY - IT IS AUTO-GENERATED
 const SITE_CONFIG_DATA = {
-  domain: "bigboy-com-site.vercel.app",
+  domain: "bigboy.com",
   siteName: "big boy",
   keyword: "my gov phone",
   ownerEmail: "bigboy@gmail.ocm",

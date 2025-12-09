@@ -15,6 +15,12 @@ const keyword = getKeyword();
 const domain = getDomain();
 const siteURL = getSiteURL();
 
+// Smart keyword formatting - avoid "Get Your my gov phone" grammar issues
+const keywordLower = keyword.toLowerCase();
+const keywordDisplay = keywordLower.startsWith('my ') || keywordLower.startsWith('your ') || keywordLower.startsWith('a ') || keywordLower.startsWith('the ')
+  ? keyword
+  : `Your ${keyword}`;
+
 // Generate dynamic CSS and fonts
 const cssVariables = generateCSSVariables(designDNA);
 const fontsURL = getGoogleFontsURL(designDNA);

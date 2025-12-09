@@ -6,6 +6,12 @@ const designDNA = getDesignDNA();
 const keyword = getKeyword();
 const domain = getDomain();
 const content = getContentVariations(domain);
+
+// Smart keyword formatting - avoid "Get Your my gov phone" grammar issues
+const keywordLower = keyword.toLowerCase();
+const keywordDisplay = keywordLower.startsWith('my ') || keywordLower.startsWith('your ') || keywordLower.startsWith('a ') || keywordLower.startsWith('the ')
+  ? keyword
+  : `Your ${keyword}`;
 ---
 
 <!-- Desktop Sticky Bar -->
@@ -25,7 +31,7 @@ const content = getContentVariations(domain);
           <!-- Main Message - Dynamic -->
           <div class="text-white">
             <p class="text-lg font-bold">
-              Get Your {keyword} Today! 
+              Get {keywordDisplay} Today! 
               <span class="text-yellow-300">{content.valueProps[2]}</span>
             </p>
             <p class="text-sm opacity-80 text-white">

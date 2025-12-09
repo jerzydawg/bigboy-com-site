@@ -8,12 +8,18 @@ const domain = getDomain();
 const siteURL = getSiteURL();
 const designDNA = getDesignDNA();
 const content = getContentVariations(domain);
+
+// Smart keyword formatting - avoid "Get Your my gov phone" grammar issues
+const keywordLower = keyword.toLowerCase();
+const keywordDisplay = keywordLower.startsWith('my ') || keywordLower.startsWith('your ') || keywordLower.startsWith('a ') || keywordLower.startsWith('the ')
+  ? keyword
+  : `Your ${keyword}`;
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": `How to Get Your ${keyword}`,
+  "name": `How to Get ${keywordDisplay}`,
   "description": `Step-by-step guide to applying for and receiving your ${keyword.toLowerCase()} through federal assistance programs`,
   "step": [
     {
@@ -51,7 +57,7 @@ const content = getContentVariations(domain);
     <!-- Mobile Section Header - Dynamic -->
     <div class="md:hidden text-center mb-8">
       <h2 class="text-2xl font-bold text-gray-900 mb-3">
-        Get Your {keyword} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
+        Get {keywordDisplay} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
       </h2>
       <p class="text-base text-gray-600">
         {content.footerTagline}
@@ -61,7 +67,7 @@ const content = getContentVariations(domain);
     <!-- Desktop Section Header - Dynamic -->
     <div class="hidden md:block text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        Get Your {keyword} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
+        Get {keywordDisplay} in <span style={`color: ${designDNA.colors.primary};`}>3 Simple Steps</span>
       </h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
         {content.footerTagline}. {content.ctaSubtext}
